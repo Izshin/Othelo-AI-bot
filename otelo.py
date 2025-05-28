@@ -1,6 +1,7 @@
 # Imports
 import pygame as pg
 from utiles.tablero import *
+from utiles.fichas import *
 
 # Setup de pygame
 pg.init()
@@ -38,9 +39,12 @@ while run:
             x, y = evento.pos
             col = x // LONG_CASILLA
             fila = y // LONG_CASILLA
+            fichas_a_voltear = obtener_fichas_a_voltear(tablero, fila, col, turno)
 
-            if tablero[fila][col] == 0:
+            if tablero[fila][col] == 0 and fichas_a_voltear:
                 tablero[fila][col] = turno
+                for f,c in fichas_a_voltear:
+                    tablero[f][c] = turno
                 turno = 1 if turno == 2 else 2
 
     dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
