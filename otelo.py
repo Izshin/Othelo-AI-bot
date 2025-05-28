@@ -10,8 +10,6 @@ LONG_TABLERO = 640
 LONG_CASILLA = 80
 COLOR_FONDO = (0, 128, 0)
 COLOR_LINEAS = (0, 0, 0)
-COLOR_BLANCAS = (255, 255, 255)
-COLOR_NEGRAS = (0, 0, 0)
 
 # Creacion de la ventana y booleano de ejecución
 pantalla = pg.display.set_mode((LONG_TABLERO, LONG_TABLERO))
@@ -31,7 +29,6 @@ tablero = [[0,0,0,0,0,0,0,0],
 # Turno inicial - empieza el jugador (que controlará las fichas negras)
 turno = 2
 
-
 while run:
     for evento in pg.event.get():
         if evento.type == pg.QUIT:
@@ -46,7 +43,7 @@ while run:
                 tablero[fila][col] = turno
                 turno = 1 if turno == 2 else 2
 
-    dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS, COLOR_BLANCAS, COLOR_NEGRAS)
+    dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
     pg.display.flip()
 
 pg.quit()
