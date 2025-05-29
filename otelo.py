@@ -35,7 +35,7 @@ while run:
         if evento.type == pg.QUIT:
             run = False
 
-        elif evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
+        elif evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1 and jugador_tiene_movimientos(tablero, turno):
             x, y = evento.pos
             col = x // LONG_CASILLA
             fila = y // LONG_CASILLA
@@ -46,6 +46,8 @@ while run:
                 for f,c in fichas_a_voltear:
                     tablero[f][c] = turno
                 turno = 1 if turno == 2 else 2
+        elif jugador_tiene_movimientos(tablero, turno) == False:
+            turno = 1 if turno == 2 else 2
 
     dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
     pg.display.flip()
