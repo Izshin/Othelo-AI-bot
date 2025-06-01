@@ -13,9 +13,9 @@ def dibujar_tablero(pantalla, tablero, long_casilla, color_fondo, color_lineas):
     - color_fondo: Color del fondo del tablero.
     - color_lineas: Color de las líneas que separan las casillas.
     '''
+
     # Dibujar fondo del tablero
     pantalla.fill(color_fondo)
-
     # Localización de cada casilla
     for fila in range(8):
         for col in range(8):

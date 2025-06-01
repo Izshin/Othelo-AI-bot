@@ -12,13 +12,14 @@ def obtener_fichas_a_voltear(tablero, fila, col, turno):
     - col: Columna de la posición en la que se va a colocar la ficha.
     - turno: Número que indica qué jugador está en su turno (0: ninguno, 1: blancas, 2: negras).
     '''
+
     # Lista con las coordenadas de las direcciones posibles. El primer número de cada tupla es la fila (1: 
     # una fila más, -1: una fila menos, 0: la misma fila). El segundo es la columna (1: una columna más...)
     direcciones = [(-1,-1),(-1, 0),(-1, 1),
                    ( 0,-1),        ( 0, 1),
                    ( 1,-1),( 1, 0),( 1, 1)]
     res = []
-
+    
     # En este bucle se añaden, para cada una de las direcciones, las coordenadas de las fichas
     # que serán volteadas tras la colocación de una ficha en la posicion (fila, col).
     for df, dc in direcciones:
@@ -43,19 +44,21 @@ def obtener_fichas_a_voltear(tablero, fila, col, turno):
 
     return res
 
-def jugador_tiene_movimientos(tablero, turno):
+def movimientos_disponibles(tablero, turno):
     '''
-    Esta función comprueba si el jugador del turno actual tiene movimientos posibles. 
-    Es imprescindible para que pase el turno de un jugador que no puede realizar movimientos.
+    Esta función devuelve una lista con las coordenadas de los lugares en los que el jugador puede colocar una ficha.
 
     PARÁMETROS
     - tablero: Matriz 8x8 con los valores que indican qué fichas hay en cada casilla.
     - turno: Número que indica qué jugador está en su turno (0: ninguno, 1: blancas, 2: negras).
     '''
+
+    res = []
     for fila in range(8):
         for col in range(8):
             if tablero[fila][col] == 0:
                 fichas = obtener_fichas_a_voltear(tablero, fila, col, turno)
                 if fichas:
-                    return True  # Puede colocar una ficha por lo menos
-    return False
+                    res.append((fila,col))
+
+    return res
