@@ -7,7 +7,7 @@ def obtener_fichas_a_voltear(tablero, fila, col, turno):
     que serán volteadas tras la colocación de una ficha en la posición dada como parámetro.
 
     PARÁMETROS
-    - tablero: Matriz 8x8 con los valores que indican qué fichas hay en cada casilla.
+    - tablero: Matriz 8x8 con los valores que indican qué ficha hay en cada casilla.
     - fila: Fila de la posición en la que se va a colocar la ficha.
     - col: Columna de la posición en la que se va a colocar la ficha.
     - turno: Número que indica qué jugador está en su turno (0: ninguno, 1: blancas, 2: negras).
@@ -49,7 +49,7 @@ def movimientos_disponibles(tablero, turno):
     Esta función devuelve una lista con las coordenadas de los lugares en los que el jugador puede colocar una ficha.
 
     PARÁMETROS
-    - tablero: Matriz 8x8 con los valores que indican qué fichas hay en cada casilla.
+    - tablero: Matriz 8x8 con los valores que indican qué ficha hay en cada casilla.
     - turno: Número que indica qué jugador está en su turno (0: ninguno, 1: blancas, 2: negras).
     '''
 
@@ -62,3 +62,23 @@ def movimientos_disponibles(tablero, turno):
                     res.append((fila,col))
 
     return res
+
+def obtener_ganador(tablero):
+    '''
+    '''
+
+    contador_negras = 0
+    contador_blancas = 0
+    for fila in range(8):
+        for col in range(8):
+            if tablero[fila][col] == 1:
+                contador_blancas += 1
+            if tablero[fila][col] == 2:
+                contador_negras += 1
+    
+    if contador_negras > contador_blancas:
+        return 2
+    elif contador_blancas > contador_negras:
+        return 1
+    elif contador_blancas == contador_negras:
+        return 0
