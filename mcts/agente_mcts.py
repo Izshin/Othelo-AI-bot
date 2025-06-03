@@ -40,7 +40,7 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
     with open(ruta_csv, mode='w', newline='') as archivo:
         writer = csv.writer(archivo)
 
-        for _ in range(num_partidas):
+        for num in range(num_partidas):
             estado = [[0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0],
@@ -49,12 +49,15 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
                       [0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0]]
-            turno = 1  # negras empiezan
+            turno = 2  # negras empiezan
             historial = []
 
             while no_terminal(estado, turno):
                 if turno == jugador:
                     accion = mcts(estado, turno, iteraciones)
+                    if accion is None:
+                        turno = 3 - turno
+                        continue
                 else:
                     acciones = movimientos_disponibles(estado, turno)
                     if acciones:
@@ -69,8 +72,20 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
                 for (f, c) in fichas_a_voltear:
                     estado[f][c] = turno
                 turno = 3 - turno
+            historial.append(copy.deepcopy(estado))
 
             recompensa = evaluar_final(estado, jugador)
+
+            print(f"\n Partida {num + 1}:")
+            print("Estado final del tablero:")
+            for fila in estado:
+                print(fila)
+            blancos = sum(f.count(1) for f in estado)
+            negros = sum(f.count(2) for f in estado)
+            print(f"Fichas blancas (1): {blancos}")
+            print(f"Fichas negras (2): {negros}")
+            print(f"Etiqueta asignada (desde perspectiva del jugador {jugador}): {recompensa}")
+
             for tablero in historial:
                 fila = tablero_a_fila(tablero, recompensa)
                 writer.writerow(fila)
@@ -78,15 +93,16 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
 
 def main():
 
-    ruta_salida = "datos/datos_otelo.csv"
+    ruta_salida = 'datos/datos_otelo.csv'
     num_partidas = 10
     jugador = 1
     iteraciones = 20
+    nombre_jugador = 'blanco' if jugador == 1 else 'negro'
 
-    print(f"Generando {num_partidas} partidas para el jugador {jugador}...")
+    print(f"Generando {num_partidas} partidas para el jugador {nombre_jugador}...")
     generar_csv_desde_mcts(ruta_salida, num_partidas, jugador, iteraciones)
     print(f"CSV generado en '{ruta_salida}' con {num_partidas} partidas.")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 

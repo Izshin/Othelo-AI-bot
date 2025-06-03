@@ -67,18 +67,12 @@ def obtener_ganador(tablero):
     '''
     '''
 
-    contador_negras = 0
-    contador_blancas = 0
-    for fila in range(8):
-        for col in range(8):
-            if tablero[fila][col] == 1:
-                contador_blancas += 1
-            if tablero[fila][col] == 2:
-                contador_negras += 1
-    
-    if contador_negras > contador_blancas:
-        return 2
-    elif contador_blancas > contador_negras:
+    blancas = sum(fila.count(1) for fila in tablero)
+    negras = sum(fila.count(2) for fila in tablero)
+
+    if blancas > negras:
         return 1
-    elif contador_blancas == contador_negras:
+    elif negras > blancas:
+        return 2
+    else:
         return 0

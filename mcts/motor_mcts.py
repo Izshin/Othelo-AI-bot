@@ -32,6 +32,9 @@ def mcts(tablero, turno, iteraciones=500):
         recompensa = default_policy(nodo)
         backup(nodo, recompensa)
         i += 1
+    
+    if not root.hijos:
+        return None
 
     return mejor_movimiento(root)
 
@@ -108,6 +111,9 @@ def default_policy(nodo):
         if acciones:
             movimiento = random.choice(acciones)
             nuevo_tablero[movimiento[0]][movimiento[1]] = turno
+            fichas_a_voltear = obtener_fichas_a_voltear(nuevo_tablero, movimiento[0], movimiento[1], turno)
+            for (f, c) in fichas_a_voltear:
+                nuevo_tablero[f][c] = turno
         turno = 3 - turno
 
     ganador = obtener_ganador(nuevo_tablero)
