@@ -130,7 +130,7 @@ X = convertir_a_canales(x_tablero)
 """Con los datos ya preparados, en canales y con las etiquetas, entrenamos la red, usando un batch de 64 que significa que
 entrenamos la red con 64 tableros a la vez, antes de actualizar los pesos. En este caso, recordemos que
 los pesos son los que estan en las celdas de los filtros en las capas convolucionales. 
-y con 70 epochs, que significa que entrenamos la red 70 veces con todos los datos de entrenamiento.
+Y con 70 epochs, que significa que entrenamos la red 70 veces con todos los datos de entrenamiento.
 
 Validation split indica que usamos 10% de los datos para validar la red, es decir, para calcular el error de las predicciones en cada 
 epoch"""
