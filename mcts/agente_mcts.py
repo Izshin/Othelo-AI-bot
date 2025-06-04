@@ -94,7 +94,7 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
 def main():
 
     ruta_salida = 'datos/datos_otelo.csv'
-    num_partidas = 10
+    num_partidas = 20
     jugador = 1
     iteraciones = 20
     nombre_jugador = 'blanco' if jugador == 1 else 'negro'
