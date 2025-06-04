@@ -65,8 +65,13 @@ def movimientos_disponibles(tablero, turno):
 
 def obtener_ganador(tablero):
     '''
+    Esta función, dado un tablero, devuelve el número correspondiente al jugador que más fichas tiene.
+
+    PARÁMETROS
+    - tablero: Matriz 8x8 con los valores que indican qué ficha hay en cada casilla.
     '''
 
+    # Conteo de fichas de cada color.
     blancas = sum(fila.count(1) for fila in tablero)
     negras = sum(fila.count(2) for fila in tablero)
 

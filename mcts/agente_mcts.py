@@ -13,6 +13,12 @@ from utiles.fichas import *
 
 def tablero_a_fila(tablero, etiqueta):
     '''
+    Esta función, dado un tablero y una etiqueta, devuelve una lista de 65 enteros con los primeros 64 como los
+    valores de las casillas del tablero y con el último como la etiqueta del resultado de la partida.
+
+    PARÁMETROS
+    - tablero: Matriz 8x8 con los valores que indican qué ficha hay en cada casilla.
+    - etiqueta: Etiqueta del resultado de la partida a la que pertenece el estado (tablero).
     '''
 
     fila = []
@@ -23,6 +29,12 @@ def tablero_a_fila(tablero, etiqueta):
 
 def evaluar_final(estado, jugador):
     '''
+    Esta función devuelve una etiqueta dado el estado final de una partida y el jugador usado como referencia.
+
+    PARÁMETROS
+    - estado: Matriz 8x8 con los valores que indican qué ficha hay en cada casilla del tablero final de la partida.
+    - jugador: Entero que representa el jugador tomado como referencia para saber si la partida ha resultado en 
+      victoria, empate o derrota. Debe tomar el valor 1 (blancas) o el valor 2 (negras).
     '''
 
     ganador = obtener_ganador(estado)
@@ -33,13 +45,23 @@ def evaluar_final(estado, jugador):
     else:
         return -1
 
-def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
+def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=50):
     '''
+    Esta es la función principal del agente. Devuelve un archivo .csv en el que cada fila representa un estado del tablero (64 números con el 
+    valor de cada casilla) y una etiqueta basada en la última fila de la partida a la que pertenecen.
+
+    PARÁMETROS
+    - ruta_csv: Cadena que representa el archivo en el que serán almacenados los datos. Hay que tener en cuenta que este script se ejecuta desde
+      la carpeta raíz del proyecto y no desde la carpeta mcts, en la que se encuentra este script.
+    - num_partidas: Número de partidas a generar.
+    - jugador: Jugador que va a ser entrenado
+    - iteraciones: Entero que indicará al algoritmo MCTS cuántas iteraciones realizar.
     '''
 
     with open(ruta_csv, mode='w', newline='') as archivo:
         writer = csv.writer(archivo)
 
+        # Para cada partida
         for num in range(num_partidas):
             estado = [[0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0],
@@ -50,32 +72,38 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
                       [0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,0,0,0]]
             turno = 2  # negras empiezan
-            historial = []
+            historial = [] # Historial de estados del tablero durante la partida
 
             while no_terminal(estado, turno):
-                if turno == jugador:
-                    accion = mcts(estado, turno, iteraciones)
-                    if accion is None:
+
+                historial.append(copy.deepcopy(estado)) # Se añade el estado al historial de estados
+
+                if turno == jugador: # En el turno del jugador a entrenar
+                    accion = mcts(estado, turno, iteraciones) # Escoger la acción basándose en el algoritmo MCTS
+                    if accion is None: # Si no hay acción posible, se pasa turno
                         turno = 3 - turno
                         continue
-                else:
+                else: # En el turno del contrincante
                     acciones = movimientos_disponibles(estado, turno)
                     if acciones:
-                        accion = random.choice(acciones)
+                        accion = random.choice(acciones) # Se realiza un movimiento aleatorio, en caso de tener acciones disponibles
                     else:
-                        turno = 3 - turno
+                        turno = 3 - turno # Si no se puede hacer nada, se pasa turno
                         continue
 
-                historial.append(copy.deepcopy(estado))
+                estado[accion[0]][accion[1]] = turno # Se coloca la ficha en el lugar elegido
+
+                # Se voltean las fichas y se pasa turno
                 fichas_a_voltear = obtener_fichas_a_voltear(estado, accion[0], accion[1], turno)
-                estado[accion[0]][accion[1]] = turno
                 for (f, c) in fichas_a_voltear:
                     estado[f][c] = turno
                 turno = 3 - turno
-            historial.append(copy.deepcopy(estado))
 
-            recompensa = evaluar_final(estado, jugador)
+            historial.append(copy.deepcopy(estado)) # Se añade al historial el estado final de la partida
+            recompensa = evaluar_final(estado, jugador) # Se evalua si el jugador a entrenar ha ganado o ha perdido
 
+            # Se muestra en la consola para cada partida: la partida, el estado final del tablero (hay que tener en cuenta que la variable 
+            # "estado" almacena, en este momento, el estado final de la partida), la cantidad de fichas de cada color y la etiqueta resultante.
             print(f"\n Partida {num + 1}:")
             print("Estado final del tablero:")
             for fila in estado:
@@ -86,6 +114,8 @@ def generar_csv_desde_mcts(ruta_csv, num_partidas, jugador=1, iteraciones=100):
             print(f"Fichas negras (2): {negros}")
             print(f"Etiqueta asignada (desde perspectiva del jugador {jugador}): {recompensa}")
 
+            # Se escribe en el csv una fila por cada estado (tablero) almacenado, incluyendo las casillas del tablero 
+            # y la etiqueta obtenida a partir del estado final.
             for tablero in historial:
                 fila = tablero_a_fila(tablero, recompensa)
                 writer.writerow(fila)

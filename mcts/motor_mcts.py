@@ -12,16 +12,17 @@ import random
 class Nodo:
     def __init__(self, estado, turno, padre=None, movimiento=None):
         '''
-        
+        Esta clase sirve para poder construir los nodos del árbol necesario para el uso del algoritmo de Monte Carlo Tree Search.
+
         ATRIBUTOS
-        - estado:
-        - turno:
-        - padre:
-        - hijos:
-        - n:
-        - q:
-        - movimientos_por_hacer: 
-        - movimiento: 
+        - estado: Estado del tablero que representa el nodo.
+        - turno: Turno del jugador que puede colocar ficha.
+        - padre: Nodo padre.
+        - hijos: Lista de nodos hijo.
+        - n: Número de veces que el nodo ha sido visitado por distintas partidas simuladas.
+        - q: Recompensa total de todas las partidas simuladas que han visitado el nodo.
+        - movimientos_por_hacer: Lista de movimientos posibles que representan los lugares en los que se puede colocar ficha.
+        - movimiento: Movimiento que ha dado lugar a este nodo (concretamente, al tablero almacenado en el atributo "estado").
         '''
         self.estado = estado
         self.turno = turno
