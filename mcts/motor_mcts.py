@@ -12,16 +12,17 @@ import random
 class Nodo:
     def __init__(self, estado, turno, padre=None, movimiento=None):
         '''
-        
+        Esta clase sirve para poder construir los nodos del árbol necesario para el uso del algoritmo de Monte Carlo Tree Search.
+
         ATRIBUTOS
-        - estado:
-        - turno:
-        - padre:
-        - hijos:
-        - n:
-        - q:
-        - movimientos_por_hacer: 
-        - movimiento: 
+        - estado: Estado del tablero que representa el nodo.
+        - turno: Turno del jugador que puede colocar ficha.
+        - padre: Nodo padre.
+        - hijos: Lista de nodos hijo.
+        - n: Número de veces que el nodo ha sido visitado por distintas partidas simuladas.
+        - q: Recompensa total de todas las partidas simuladas que han visitado el nodo.
+        - movimientos_por_hacer: Lista de movimientos posibles que representan los lugares en los que se puede colocar ficha.
+        - movimiento: Movimiento que ha dado lugar a este nodo (concretamente, al tablero almacenado en el atributo "estado").
         '''
         self.estado = estado
         self.turno = turno
@@ -139,8 +140,7 @@ def mejor_hijo(nodo, c=1.41):
     '''
 
     # En caso de que no haya nodos hijo porque se trate de un nodo de estado terminal, devolveremos el mismo nodo dado como parámetro.
-    # Esto es sólo una comprobación para que la función no tenga un error al recorrer la lista de hijos y devuelva None, pero no es 
-    # algo estrictamente necesario.
+    # Esto es sólo una comprobación para que la función no tenga un error al recorrer la lista de hijos y devuelva None.
     if not nodo.hijos:
         return nodo
 
@@ -149,7 +149,7 @@ def mejor_hijo(nodo, c=1.41):
     uct = None
     for h in nodo.hijos:
         if h.n == 0:
-            uct_actual = float('inf') # Si, por lo que sea, h.n es 0, uct será infinito a causa de dividir por 0. Esto no es un paso estrictamente necesario.
+            uct_actual = float('inf') # Si h.n es 0, UCT será infinito a causa de dividir por 0.
         else:
             uct_actual = (h.q/h.n) + c*sqrt((2*log(nodo.n))/h.n)
         # Si el UCT más alto registrado todavía no es un número o si es más bajo que el recién calculado se le asigna ese UCT que acabamos de calcular
