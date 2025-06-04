@@ -140,8 +140,7 @@ def mejor_hijo(nodo, c=1.41):
     '''
 
     # En caso de que no haya nodos hijo porque se trate de un nodo de estado terminal, devolveremos el mismo nodo dado como parámetro.
-    # Esto es sólo una comprobación para que la función no tenga un error al recorrer la lista de hijos y devuelva None, pero no es 
-    # algo estrictamente necesario.
+    # Esto es sólo una comprobación para que la función no tenga un error al recorrer la lista de hijos y devuelva None.
     if not nodo.hijos:
         return nodo
 
