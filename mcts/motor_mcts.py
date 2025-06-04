@@ -150,7 +150,7 @@ def mejor_hijo(nodo, c=1.41):
     uct = None
     for h in nodo.hijos:
         if h.n == 0:
-            uct_actual = float('inf') # Si, por lo que sea, h.n es 0, uct será infinito a causa de dividir por 0. Esto no es un paso estrictamente necesario.
+            uct_actual = float('inf') # Si h.n es 0, UCT será infinito a causa de dividir por 0.
         else:
             uct_actual = (h.q/h.n) + c*sqrt((2*log(nodo.n))/h.n)
         # Si el UCT más alto registrado todavía no es un número o si es más bajo que el recién calculado se le asigna ese UCT que acabamos de calcular
