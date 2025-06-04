@@ -145,4 +145,6 @@ history = model_othello.fit(
 )
 
 
+"""Por último, guardamos la red entrenada en .h5 para cargarla en el motor MCTS que itegra la red."""
+
 model_othello.save("othello_neuronal_entrenada.h5")

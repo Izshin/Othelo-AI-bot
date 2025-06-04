@@ -14,9 +14,7 @@ from utiles.fichas import movimientos_disponibles, obtener_fichas_a_voltear, obt
 # Importamos la función mcts de nuestro motor neuronal
 from mcts.motor_mcts_neuronal import mcts
 
-# ---------------------------------------------------
-# 1) Configuración inicial de Pygame
-# ---------------------------------------------------
+#Configuramos pygame y el tablero
 pg.init()
 LONG_TABLERO = 640
 LONG_CASILLA = 80
@@ -26,10 +24,7 @@ pantalla = pg.display.set_mode((LONG_TABLERO, LONG_TABLERO))
 pg.display.set_caption('Othello: Humano vs IA')
 clock = pg.time.Clock()
 
-# ---------------------------------------------------
-# 2) Estado inicial del tablero
-# ---------------------------------------------------
-# 0: vacío, 1: blanca (IA), 2: negra (humano)
+#Establecemos el tablero inicial
 tablero = [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
@@ -44,58 +39,59 @@ tablero = [
 # El humano (fichas negras=2) comienza
 turno = 2
 
-# Número de iteraciones para MCTS
+""" Número de iteraciones para MCTS, a menos iteraciones, más rápido pero menos preciso
+ a más iteraciones, más preciso pero más lento."""
 ITER_MCTS = 80
 
-# Bandera para saber si el humano movió en esta iteración
+#Tenemos que saber si la persona ha movido para dejar un pequeño tiempo entre jugadas y que se vea la jugada
 humano_movio = False
 
-# ---------------------------------------------------
-# 3) Bucle principal
-# ---------------------------------------------------
+#Bucle principal del juego, se repetirá hasta que se cierre la ventana
 run = True
 while run:
-    humano_movio = False  # Reseteamos al principio de cada frame
+    humano_movio = False  #Cada vez que el bucle comienza, tienes que mover porque el turno inicial es el tuyo, o te toca mover
 
-    # --- 3.1) Manejo de eventos de Pygame ---
+  #Eventos de pygame
     for evento in pg.event.get():
-        # Si cierra la ventana
         if evento.type == pg.QUIT:
             run = False
 
         # Si el humano hace clic con el botón izquierdo y es su turno
         elif evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1 and turno == 2:
+            #Si ha hecho click, combrobamos que el movimiento es valido
             if movimientos_disponibles(tablero, turno):
                 x, y = evento.pos
                 col = x // LONG_CASILLA
                 fila = y // LONG_CASILLA
 
-                # Verificamos que la casilla esté vacía y sea un movimiento válido
+                # Verificamos que la casilla esté vacía
                 if tablero[fila][col] == 0:
                     fichas_a_voltear = obtener_fichas_a_voltear(tablero, fila, col, turno)
                     if fichas_a_voltear:
-                        # 3.1.1) Aplicar jugada del humano
+                        #Se voltean las fichas, si procede
                         tablero[fila][col] = turno
                         for (f, c) in fichas_a_voltear:
                             tablero[f][c] = turno
 
-                        # Cambiamos el turno a la IA
+                        #Le damos a la IA el movimiento
                         turno = 1
                         humano_movio = True
 
-    # --- 3.2) Si el humano movió, lo dibujamos YA y luego la IA piensa ---
+    #Si la persona acaba de hacer un movimiento, dibujamos el tablero y esperamos un poco para que la IA empiece a pensar
     if humano_movio:
-        # 3.2.1) Dibujar tablero con la jugada del humano YA reflejada
+        #Dibujamos tablero
         dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
         pg.display.flip()
 
-        # 3.2.2) Pequeño delay para que se vea la ficha del humano
+        #Pequeña espera
         pg.time.delay(300)
 
-        # 3.2.3) Turno de la IA (si tiene movimientos disponibles)
+        #Turno de la IA
         if movimientos_disponibles(tablero, turno):
+            #Realiza las iteraciones de MCTS y la IA piensa su movimiento
             movimiento_ia = mcts(tablero, turno, ITER_MCTS)
 
+            #Si la IA tiene un movimiento valido, lo realiza
             if movimiento_ia is not None:
                 fila_ia, col_ia = movimiento_ia
                 fichas_ia = obtener_fichas_a_voltear(tablero, fila_ia, col_ia, turno)
@@ -103,28 +99,27 @@ while run:
                 for (f, c) in fichas_ia:
                     tablero[f][c] = turno
 
-                # 3.2.4) Dibujar tablero con la jugada de la IA
+                #Se dibuja el tablero para reflejar el movimiento de la IA
                 dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
                 pg.display.flip()
 
-                # Otro pequeño delay para «ver» la jugada de la IA
+                #Pequeña espera para que se vea el movimiento de la IA
                 pg.time.delay(300)
 
-        # 3.2.5) Tras la IA, vuelve el turno al humano (o se pasa si no hay movimientos)
+        #Se vuelve al turno de la persona
         turno = 2
         if not movimientos_disponibles(tablero, turno):
             turno = 1
 
-    # --- 3.3) Si no llegó un clic humano, puede que el humano no tenga jugadas ---
     else:
-        # Si al inicio de la iteración no hay movimientos para el humano, pasamos turno a IA
+        #Si no hay movimiento disponible para la persona, se pasa el turno a la IA
         if turno == 2 and not movimientos_disponibles(tablero, turno):
             turno = 1
 
-    # --- 3.4) Si es turno de IA y no acaba de mover el humano (ejemplo: pasó el humano) ---
+    #Si es turno de IA y la persona no ha movido, la IA piensa y hace su movimiento
     if turno == 1 and not humano_movio:
         if movimientos_disponibles(tablero, turno):
-            # Dibujamos el estado ANTES de que la IA mueva (para claridad)
+            #Dibujamos el tablero antes del movimiento de la IA, con una espera para que se vea el movimiento
             dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
             pg.display.flip()
             pg.time.delay(300)
@@ -147,14 +142,13 @@ while run:
         if not movimientos_disponibles(tablero, turno):
             turno = 1
 
-    # --- 3.5) Dibujar el tablero en cada iteración (por si no hubo clic humano) ---
+    """Dibujamos el tablero en cada iteración del bucle, no hace falta que se dibuje puesto que en el resto del bucle se dibuja, 
+    pero por si acaso para que se vea el tablero actualizado"""
     dibujar_tablero(pantalla, tablero, LONG_CASILLA, COLOR_FONDO, COLOR_LINEAS)
     pg.display.flip()
     clock.tick(30)
 
-# ---------------------------------------------------
-# 4) Al cerrar, calculamos el resultado final
-# ---------------------------------------------------
+#Cerramos pygame y mostramos el resultado final
 pg.quit()
 
 blancas = sum(fila.count(1) for fila in tablero)
