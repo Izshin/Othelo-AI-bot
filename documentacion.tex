@@ -1,0 +1,74 @@
+\documentclass[conference]{IEEEtran}
+
+% ---------- Paquetes recomendados ----------
+\usepackage[utf8]{inputenc}  % Codificación UTF-8
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}        % Para imágenes
+\usepackage{amsmath, amssymb}
+\usepackage{cite}            % Para referencias IEEE
+\usepackage{url}             % Para URLs
+
+% ---------- Inicio del documento ----------
+\begin{document}
+
+% ---------- Título ----------
+\title{Búsqueda adversaria para aprender a jugar a Otelo}
+
+\author{
+    \IEEEauthorblockN{Eloy Sancho Cebrero}
+    \IEEEauthorblockA{
+        Universidad de Sevilla \\
+        Sevilla, España \\
+        elosanceb@alum.us.es
+    }
+    \and
+    \IEEEauthorblockN{Iván Fernández Limárquez}
+    \IEEEauthorblockA{
+        Universidad de Sevilla \\
+        Sevilla, España \\
+        ivaferlim@alum.us.es
+    }
+}
+
+\maketitle
+
+% ---------- Resumen ----------
+\begin{abstract}
+Este es el resumen del trabajo. Aquí puedes describir brevemente el objetivo, el método utilizado y los resultados más importantes. Suele ocupar unas 5–6 líneas.
+\end{abstract}
+
+% ---------- Palabras clave ----------
+\begin{IEEEkeywords}
+Monte Carlo Tree Search, MCTS, Upper Confidence Bound for Trees, Othello, Otelo, Reversi, Python, Inteligencia Artificial
+\end{IEEEkeywords}
+
+% ---------- Secciones ----------
+\section{Introducción}
+Describe aquí el contexto del proyecto, motivación y objetivos.
+
+\section{Preliminares}
+Preliminares
+
+\section{Implementación}
+Implementación
+\begin{itemize}
+    \item Implementación del Otelo en \texttt{pygame} sin agente adversario.
+    \item Diseño del agente MCTS con UCT.
+    \item Generación de datos para la red neuronal.
+    \item Diseño e implementación de la red neuronal.
+    \item Entrenamiento de la red neuronal.
+    \item Implementación de agente adversario.
+\end{itemize}
+
+\section{Pruebas y experimentación}
+Explica qué datos has obtenido, cómo se comporta el agente, etc. Puedes incluir tablas, gráficos, o descripciones.
+
+\section{Conclusiones}
+Resume lo aprendido, dificultades enfrentadas, mejoras posibles.
+
+% ---------- Bibliografía ----------
+\bibliographystyle{IEEEtran}
+\bibliography{bibliografia}
+
+% ---------- Fin del documento ----------
+\end{document}
