@@ -1,5 +1,5 @@
 # Fdb version 4
-["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749326327.83726 0
+["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749326560.20405 0
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
   "bibliografia.bib" 0 -1 0 ""
   "documentacion.aux" 0 -1 0 "pdflatex"
@@ -7,7 +7,7 @@
   "documentacion.bbl"
   "documentacion.blg"
   (rewritten before read)
-["pdflatex"] 1749326326.80877 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749326327.83787 0
+["pdflatex"] 1749326559.10352 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749326560.20466 0
   "C:/Program Files/MiKTeX/tex/latex/cite/cite.sty" 1425353482 26218 19edeff8cdc2bcb704e8051dc55eb5a7 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/ot1ptm.fd" 1585253778 1007 15056f4a61917ceed3a44e4ac11fcc52 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
@@ -80,10 +80,10 @@
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/ieeetran/IEEEtran.cls" 1440627644 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1704400941 30006 57b07afb710ee2f649c65cfbafda39c1 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749326326 19749 d593c4ee24acb4e30756f73aa734e245 ""
-  "documentacion.aux" 1749326327 1405 0fc62133ed8b294077501e4aeae8ebda "pdflatex"
+  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749326558 19749 d593c4ee24acb4e30756f73aa734e245 ""
+  "documentacion.aux" 1749326559 1405 0fc62133ed8b294077501e4aeae8ebda "pdflatex"
   "documentacion.bbl" 0 -1 0 "bibtex documentacion"
-  "documentacion.tex" 1749326326 19749 d593c4ee24acb4e30756f73aa734e245 ""
+  "documentacion.tex" 1749326558 19749 d593c4ee24acb4e30756f73aa734e245 ""
   (generated)
   "documentacion.aux"
   "documentacion.log"
