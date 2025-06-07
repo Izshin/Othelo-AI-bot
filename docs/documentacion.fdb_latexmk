@@ -1,5 +1,5 @@
 # Fdb version 4
-["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749235951.0194 0
+["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749299004.52781 0
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
   "bibliografia.bib" 0 -1 0 ""
   "documentacion.aux" 0 -1 0 "pdflatex"
@@ -7,7 +7,7 @@
   "documentacion.bbl"
   "documentacion.blg"
   (rewritten before read)
-["pdflatex"] 1749235949.8785 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749235951.02029 0
+["pdflatex"] 1749299003.41737 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749299004.52868 0
   "C:/Users/eloy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1749233344 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/eloy/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1749233337 24224573 f78a79b515f8aea858e331b76996f188 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -62,10 +62,10 @@
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1ptm.fd" 1585253778 817 61d7da1e9f9e74989b196d147e623736 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749235949 3182 1f77bbb92661662e8f5af9c0f4a4687c ""
-  "documentacion.aux" 1749235950 1361 72ad94aeca8cd29b846acfd4ab8c86bf "pdflatex"
+  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749299001 8367 806e5e5c85d4574b1a502189d55e47c8 ""
+  "documentacion.aux" 1749299003 1373 ec9b636da868b9c2f1da053e64bb5656 "pdflatex"
   "documentacion.bbl" 0 -1 0 "bibtex documentacion"
-  "documentacion.tex" 1749235949 3182 1f77bbb92661662e8f5af9c0f4a4687c ""
+  "documentacion.tex" 1749299001 8367 806e5e5c85d4574b1a502189d55e47c8 ""
   (generated)
   "documentacion.aux"
   "documentacion.log"

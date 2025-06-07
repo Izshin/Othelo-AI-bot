@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.6.6)  6 JUN 2025 20:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.6.6)  7 JUN 2025 14:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -258,7 +258,10 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 57.
+ [1{C:/Users/eloy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
+
+]
 No file documentacion.bbl.
 
 ** Conference Paper **
@@ -271,8 +274,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[1{C:/Users/eloy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
-
+[2
 
 ] (documentacion.aux)
  ***********
@@ -283,15 +285,15 @@ L3 programming layer <2024-01-04>
 Here is how much of TeX's memory you used:
  3845 strings out of 474486
  60271 string characters out of 5744228
- 1933542 words of memory out of 5000000
+ 1941542 words of memory out of 5000000
  26115 multiletter control sequences out of 15000+600000
  658905 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,65p,793b,260s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,65p,1423b,260s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb><C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on documentacion.pdf (1 page, 66228 bytes).
+Output written on documentacion.pdf (2 pages, 71744 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
+ 35 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
