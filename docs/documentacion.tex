@@ -44,10 +44,20 @@ Monte Carlo Tree Search, MCTS, Upper Confidence Bound for Trees, UCT, Othello, O
 
 % ---------- Secciones ----------
 \section{Introducción}
-Describe aquí el contexto del proyecto, motivación y objetivos.
-
+En muchos juegos podemos ver IA's que nos permiten jugar contra ellas, ya sea como forma de introducirnos en el juego, o como maximo exponente del mismo.
+Con el objetivo de aprender a crearlas, hemos creado una IA que aprende a jugar al juego de Otelo, para ello logramos crear un conjunto de datos con un
+algoritmo base (Montecarlo) y posteriormente usamos esos datos para entrenar una red neuronal implementada en ese mismo algoritmo que pudiera perfeccionar las jugadas a lo largo de la 
+partida. En este documento estudiaremos como hemos logrado implementar todo esto, además de los resultados obtenidos al enfrentar la IA con red neuronal,
+contra la que no tenia. Las principales dificultades al plantearnos esta tarea fueron, la elección de la estructura de la red neuronal y sus hiperparámetros, pues para
+que la red mejorará había que elegir una tasa de aprendizaje efectiva y era imperativo el hacer una elección lógica de la arquitectura, puesto que hay numerosas
+formas de montar una red neuronal y cada una tiene sus ventajas e inconvenientes para cada tarea. Ademas de esto, tambien hubo dificultad en: (eloy)
 \section{Preliminares}
-Preliminares
+Partimos de un agente que implementa montecarlo que se encarga de jugar partidas contra movimientos aleatorios, este guardará los estados intermedios 
+en la partida y a cada uno se le asignará si, al acabar la partida, ganó, perdió o empató. Para representar estos estados hemos optado por hacer un csv, 
+en el cual cada fila está formada de 65 elementos, los primeros 64 son el estado del tablero en orden, cada elemento es una casilla y si es 0 no hay nada,
+si es 1 hay ficha blanca, si hay 2 hay ficha negra. El ultimo de los 65 elementos es la etiqueta que representa el resultado final de esa partida, propagado a cada estado intermedio,
+-1 si perdió, 0 si empató, 1 si ganó. Tanto para enfrentarse a la IA como jugador, como para enfrentar a ambas IA entre sí, implementamos pygame, del cual se tratará su implementación mas adelante.
+Para el diseño y entrenamiento de la red usamos tensorflow y keras 
 
 \section{Implementación}
 Para la implementación del proyecto se han realizado los siguientes pasos: se ha creado una versión inicial de Otelo utilizando Pygame, se ha creado un agente básico utilizando el algoritmo de Monte Carlo Tree Search, se han generado datos a partir de ese agente básico, se ha creado y, posteriormente, entrenado una red neuronal a partir de los datos generados, se ha utilizado la red neuronal como sustituta de una de las funciones de las que hace uso la implementación inicial del algoritmo MCTS y, finalmente, se ha adaptado la versión inicial de Otelo (en la que no se podía jugar contra ningún adversario) para que el agente desarrollado pudiese jugar contra el usuario.
