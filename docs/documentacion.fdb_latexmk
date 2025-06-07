@@ -1,5 +1,5 @@
 # Fdb version 4
-["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749326560.20405 0
+["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749338488.47492 0
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
   "bibliografia.bib" 0 -1 0 ""
   "documentacion.aux" 0 -1 0 "pdflatex"
@@ -7,7 +7,7 @@
   "documentacion.bbl"
   "documentacion.blg"
   (rewritten before read)
-["pdflatex"] 1749326559.10352 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749326560.20466 0
+["pdflatex"] 1749338487.46294 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749338488.47553 0
   "C:/Program Files/MiKTeX/tex/latex/cite/cite.sty" 1425353482 26218 19edeff8cdc2bcb704e8051dc55eb5a7 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/ot1ptm.fd" 1585253778 1007 15056f4a61917ceed3a44e4ac11fcc52 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
@@ -15,6 +15,8 @@
   "C:/Users/ivanf/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1749324878 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/ivanf/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1749324922 24225285 a21c182c25f1b0937007ff66fe0adddf ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
+  "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/courier/pcrb8r.tfm" 1136765053 1292 3059476c50a24578715759f22652f3d0 ""
+  "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/courier/pcrb8t.tfm" 1136765053 1384 87406e4336af44af883a035f17f319d9 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136765053 1292 bd42be2f344128bff6d35d98474adfe3 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/courier/pcrr8t.tfm" 1136765053 1384 4632f5e54900a7dadbb83f555bc61e56 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/courier/pcrro8r.tfm" 1136765053 1544 4fb84cf2931ec523c2c6a08d939088ba ""
@@ -44,12 +46,14 @@
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1247596667 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1247596666 32716 08e384dc442464e7285e891af9f45947 ""
+  "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrb8a.pfb" 1136846148 50493 4ed1f7e9eba8f1f3e1ec25195460190d ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb" 1136846148 45758 19968a0990191524e34e1994d4a31cb6 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb" 1136846148 44404 ea3d9c0311883914133975dd62a9185c ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb" 1136849748 44729 fea0975e20ec51c992338362f05f1146 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb" 1136849748 44656 0cbca70e0534538582128f6b54593cca ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb" 1136849748 46026 687528a208fbfc1f00832bb96cccebbb ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb" 1136849748 45458 504e2b06fa82109d168c7a0afb09e145 ""
+  "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/vf/adobe/courier/pcrb8t.vf" 1136765053 2184 5d20c8b00cd914e50251116c274e2d0b ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/vf/adobe/courier/pcrr8t.vf" 1136765053 2184 8475af1b9cfa983db5f46f5ed4b8f9f7 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/vf/adobe/courier/pcrro8t.vf" 1136765053 2280 d7cd083c724c9449e1d12731253966f7 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/fonts/vf/adobe/times/ptmb8t.vf" 1136768654 2340 df9c920cc5688ebbf16a93f45ce7bdd3 ""
@@ -80,10 +84,10 @@
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/ieeetran/IEEEtran.cls" 1440627644 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1704400941 30006 57b07afb710ee2f649c65cfbafda39c1 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749326558 19749 d593c4ee24acb4e30756f73aa734e245 ""
-  "documentacion.aux" 1749326559 1405 0fc62133ed8b294077501e4aeae8ebda "pdflatex"
+  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749338486 25134 2a91b2b95678ae4002b85e2c8b18bf86 ""
+  "documentacion.aux" 1749338487 1405 a2174100a0422ec75871b8a368f94274 "pdflatex"
   "documentacion.bbl" 0 -1 0 "bibtex documentacion"
-  "documentacion.tex" 1749326558 19749 d593c4ee24acb4e30756f73aa734e245 ""
+  "documentacion.tex" 1749338486 25134 2a91b2b95678ae4002b85e2c8b18bf86 ""
   (generated)
   "documentacion.aux"
   "documentacion.log"

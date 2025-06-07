@@ -50,14 +50,16 @@ algoritmo base (Montecarlo) y posteriormente usamos esos datos para entrenar una
 partida. En este documento estudiaremos como hemos logrado implementar todo esto, además de los resultados obtenidos al enfrentar la IA con red neuronal,
 contra la que no tenia. Las principales dificultades al plantearnos esta tarea fueron, la elección de la estructura de la red neuronal y sus hiperparámetros, pues para
 que la red mejorará había que elegir una tasa de aprendizaje efectiva y era imperativo el hacer una elección lógica de la arquitectura, puesto que hay numerosas
-formas de montar una red neuronal y cada una tiene sus ventajas e inconvenientes para cada tarea. Ademas de esto, tambien hubo dificultad en: (eloy)
+formas de montar una red neuronal y cada una tiene sus ventajas e inconvenientes para cada tarea. Ademas de esto, tambien planteo una ligera dificultad la funcion
+de tree policy en el algoritmo de Montecarlo, pues era algo mas compleja que el resto.
 \section{Preliminares}
 Partimos de un agente que implementa montecarlo que se encarga de jugar partidas contra movimientos aleatorios, este guardará los estados intermedios 
 en la partida y a cada uno se le asignará si, al acabar la partida, ganó, perdió o empató. Para representar estos estados hemos optado por hacer un csv, 
 en el cual cada fila está formada de 65 elementos, los primeros 64 son el estado del tablero en orden, cada elemento es una casilla y si es 0 no hay nada,
 si es 1 hay ficha blanca, si hay 2 hay ficha negra. El ultimo de los 65 elementos es la etiqueta que representa el resultado final de esa partida, propagado a cada estado intermedio,
 -1 si perdió, 0 si empató, 1 si ganó. Tanto para enfrentarse a la IA como jugador, como para enfrentar a ambas IA entre sí, implementamos pygame, del cual se tratará su implementación mas adelante.
-Para el diseño y entrenamiento de la red usamos tensorflow y keras 
+Para el diseño y entrenamiento de la red usamos tensorflow y keras, y para el tratamiento de datos empleamos mayoritariamente numpy, pues implementa muchas funciones utiles para presentar y amoldar
+estos datos.
 
 \section{Implementación}
 Para la implementación del proyecto se han realizado los siguientes pasos: se ha creado una versión inicial de Otelo utilizando Pygame, se ha creado un agente básico utilizando el algoritmo de Monte Carlo Tree Search, se han generado datos a partir de ese agente básico, se ha creado y, posteriormente, entrenado una red neuronal a partir de los datos generados, se ha utilizado la red neuronal como sustituta de una de las funciones de las que hace uso la implementación inicial del algoritmo MCTS y, finalmente, se ha adaptado la versión inicial de Otelo (en la que no se podía jugar contra ningún adversario) para que el agente desarrollado pudiese jugar contra el usuario.
@@ -130,9 +132,35 @@ Ejemplo.
 Ejemplo.
 
 \subsection{Diseño de la red neuronal}
-Ejemplo.
+La red neuronal como se mencionó en la introduccion esta hecha con keras, para hacerla 
+creamos un input de la forma (8,8,2) lo que significa que tomaremos un tablero de 8x8 casillas y cada casilla
+sera un canal doble, esto no es mas que una lista con dos valores binarios, si ambos son 0 la casilla estará vacía
+si el primero es 1, la casilla estará ocupada por una ficha blanca, si el segundo es 1 entonces hay una ficha negra.
 
-Ejemplo.
+
+Se hace de esta forma puesto que, de esta manera la red no deberá "adivinar" que el valor 2 es para las negras y el 1 para las blancas
+de otra forma la red podría interpretar que, por ejemplo, 2 es "mejor" que 1, entre otras complicaciones.
+Así pues la red neuronal se compone de varias capas:
+\begin{itemize}
+    \item \textbf{Capa de entrada}: Se encarga de tomar los datos de entrada, el input ya ha sido explicado 
+    \item \textbf{Capas convolucionales}: Las primeras capas de la red neuronal son de tipo convolucional y utilizan filtros de tamaño $3 \times 3$. Estas capas se inspiran en el funcionamiento de las redes convolucionales tradicionales aplicadas al procesamiento de imágenes, adaptadas aquí al tablero de Otelo, representado como una matriz de dimensiones $8 \times 8$ con dos canales.
+
+Cada filtro o \textit{kernel} o informalmente hablando \textit{"plantilla"} convolucional actúa como una ventana entrenable que recorre la matriz de entrada y busca patrones locales que puedan ser relevantes para la toma de decisiones del agente. Matemáticamente, un filtro de tamaño $3 \times 3$ posee un conjunto de nueve pesos (uno por cada celda del filtro), y su aplicación sobre una subregión del tablero consiste en realizar una operación de convolución: multiplicar cada uno de esos pesos por el valor correspondiente de la celda del tablero en la que se superpone, y sumar todos los productos obtenidos. Esta suma constituye un único valor de salida que representa la "respuesta" del filtro ante dicha subregión.
+
+Este proceso se repite a lo largo de toda la matriz de entrada, desplazando el filtro sobre cada posible submatriz $3 \times 3$ del tablero. Como resultado, se genera un nuevo mapa de activación (o tablero de salida) que contiene, en cada posición, el valor calculado mediante la operación descrita. Este mapa o "nuevo tablero" representa una transformación intermedia de los datos de entrada que representan ciertos patrones en el juego, como columnas de fichas, filas de fichas negras, casillas vacías...
+
+ Al aplicar un filtro, la posición central de la región sobre la que se aplicó el mismo pasa a ser el nuevo valor en la "celda" del mapa de salida. Así que como cada capa convolucional va recibiendo "tableros" enteros con identificaciones de patrones de la anterior, a cada capa los patrones detectados son mas abstractos. Lo que se podría traducir a un "entendimiento" mas profundo del juego, o a la posibilidad de visualizar jugadas mas estratégicas por parte del agente
+\item \textbf{Capa de aplanado}: Esta capa transforma los tableros (tensores tridimensionales, $8 \times 8 \times 128$) generados por la última capa convolucional en un vector unidimensional. Esta operación permite conectar las capas convolucionales, que trabajan sobre estructuras espaciales, con las capas densas posteriores, que operan sobre vectores. En nuestro caso, el resultado es un vector de 8192 elementos.
+
+\item \textbf{Capa de desactivación (\texttt{Dropout})}: Se introduce una capa \texttt{Dropout} con una tasa de desactivación del 50\,\% para reducir el riesgo de sobreajuste. Durante el entrenamiento, esta capa apaga aleatoriamente la mitad de las neuronas que alimentan la siguiente capa. Al estar apagadas su output no se generará y por ende el ajuste será mas acotado.
+
+\item \textbf{Capa densa}: A continuación, se emplea una capa totalmente conectada (\texttt{Dense}) que reduce los 8192 valores obtenidos tras el aplanado a una representación más compacta de 256 dimensiones. Estos valores pueden interpretarse como una codificación intermedia que captura la cantidad y relevancia de ciertos patrones estratégicos en el estado actual del tablero.
+
+\item \textbf{Capa de salida}: Finalmente, se utiliza una capa densa con una única neurona y función de activación tangente hiperbólica (\texttt{tanh}), que produce una salida en el rango $[-1, 1]$. Este valor representa una estimación de lo favorable o desfavorable que es una determinada posición para el jugador actual.
+
+    \item \textbf{Optimizador y función de pérdida}: Para la optimización del modelo se ha utilizado el algoritmo \texttt{Adam} (Adaptive Moment Estimation), ampliamente empleado en redes neuronales profundas. Este optimizador ajusta de forma adaptativa las tasas de aprendizaje de cada parámetro, lo cual resulta especialmente útil en escenarios con estructuras complejas como las redes convolucionales. En cuanto a la función de pérdida, se ha empleado el error cuadrático medio (\texttt{MSE}), ya que el objetivo de la red es aproximar una evaluación numérica continua del estado del juego en el intervalo $[-1, 1]$.
+\end{itemize}
+
 
 \subsection{Entrenamiento de la red neuronal}
 Ejemplo.
