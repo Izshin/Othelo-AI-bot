@@ -73,7 +73,7 @@ El juego se planteó como una matriz de ocho filas y ocho columnas en la que los
 
 Sin embargo, esta lógica es la base que hay detrás de la interfaz gráfica mediante la cual una persona puede jugar a esta implementación de Otelo, una interfaz gráfica creada gracias a los recursos de la librería Pygame. Si bien es cierto que, entre las alternativas posibles para la implementación de este juego estaba la opción de crear un script que permitiera jugar a Otelo mediante texto (es decir, representando directamente la lógica que se ha mencionado anteriormente), valoramos más la opción de hacer uso de la librería Pygame, pues no sólo el juego sería mejor desde el punto de vista visual (aunque, dentro de los mínimos a cumplir en el proyecto, no desde el punto de vista técnico), sino que también se concibió el uso de Pygame como una manera muy intuitiva de empezar la implementación del proyecto partiendo desde cero.
 
-Se construyó el script otelo.py para que, al ser ejecutado, inicializase una pantalla de 640 píxeles de alto y ancho en la que el color de fondo es el verde y varias líneas negras dividen las casillas cuadradas de 80 píxeles de lado. Adicionalmente, se representan las fichas como círculos blancos o negros de diámetro un poco menor al lado de las casillas y de centro situado en el centro de la casilla en la que está cada uno. Este script, como todos los videojuegos creados a partir de Pygame, contiene un bucle principal que comprueba si el usuario ha cerrado la ventana, comprueba si el usuario ha hecho clic en alguna casilla, etc. En este bucle, dentro de la implementación inicial que se trata en este apartado, sencillamente se comprueba en qué lugares de la pantalla el usuario hace clic para colocar la ficha correspondiente (en caso de que la disposición del tablero lo permita) y se alternan los turnos (\texttt{turno = 1} y \texttt{turno = 2}). Cada vez que ocurre esto, se pinta el tablero en base a la nueva matriz que lo representa y que contiene los cambios provocados por la acción del jugador (tanto la posición de la nueva ficha colocada como las fichas volteadas).
+Se construyó el script \texttt{otelo.py} para que, al ser ejecutado, inicializase una pantalla de 640 píxeles de alto y ancho en la que el color de fondo es el verde y varias líneas negras dividen las casillas cuadradas de 80 píxeles de lado. Adicionalmente, se representan las fichas como círculos blancos o negros de diámetro un poco menor al lado de las casillas y de centro situado en el centro de la casilla en la que está cada uno. Este script, como todos los videojuegos creados a partir de Pygame, contiene un bucle principal que comprueba si el usuario ha cerrado la ventana, comprueba si el usuario ha hecho clic en alguna casilla, etc. En este bucle, dentro de la implementación inicial que se trata en este apartado, sencillamente se comprueba en qué lugares de la pantalla el usuario hace clic para colocar la ficha correspondiente (en caso de que la disposición del tablero lo permita) y se alternan los turnos (\texttt{turno = 1} y \texttt{turno = 2}). Cada vez que ocurre esto, se pinta el tablero en base a la nueva matriz que lo representa y que contiene los cambios provocados por la acción del jugador (tanto la posición de la nueva ficha colocada como las fichas volteadas).
 
 El proceso para hacer esto consiste en lo siguiente: primero es necesario convertir el píxel en el que el usuario ha hecho clic en una casilla. Para ello, se hace una división entera de cada coordenada del píxel entre la longitud en píxeles de cada casilla. Posteriormente, teniendo las coordenadas de la casilla, se comprueba si es posible colocar ficha en la casilla seleccionada. Si no lo es, no ocurre nada, pero si lo es, se coloca la ficha en la casilla y se voltean las fichas que deberán darse la vuelta tras la aparición de la nueva ficha. Para realizar tanto la comprobación de movimientos disponibles como el volteo de las fichas, se utilizan funciones que comprueban si existen fichas que serán volteadas tras la colocación de la nueva ficha (aunque, anteriormente, se comprueba si la matriz contiene un cero en el lugar seleccionado) y se guardan las coordenadas de dichas fichas para, en la modificación del tablero previa al cambio de turno, cambiar el color de las fichas a voltear; en caso de que el turno actual sea igual a 1 (blancas) se asigna el valor 1 a las celdas de la matriz equivalentes a las casillas afectadas y en caso de que el turno actual sea el del jugador de las fichas negras (igual a 2), se hace exactamente lo mismo pero asignando un 2 a las celdas correspondientes.
 
@@ -127,9 +127,30 @@ Tras la simulación y la obtención de la etiqueta correspondiente (-1, 0 ó 1),
 Por último, tras la realización de todas las iteraciones indicadas a la función \texttt{mcts}, se elige la mejor acción de entre todas las posibles, eligiendo el mejor hijo del nodo raíz y devolviendo el atributo \texttt{movimiento} que, como se ha mencionado anteriormente, indica el movimiento que ha dado lugar al estado del tablero que representa dicho nodo.
 
 \subsection{Agente básico generador de datos}
-Ejemplo.
+El agente básico generador de datos es el agente que hace uso de lo que hemos denominado "motor MCTS" para jugar partidas y registrar todos y cada uno de los estados en los que el tablero se ha encontrado durante cada una de las partidas generadas. Cabe recalcar que, todavía, no es posible jugar contra este agente y el juego de Otelo implementado sigue siendo la básica versión en el que el único jugador existente es el usuario y éste alterna entre el control de las fichas blancas y las negras.
 
-Ejemplo.
+Este agente se limita a jugar partidas contra un adversario que elige acciones aleatorias y registra en un archivo llamado \texttt{datos\_otelo.csv} todos los estados del tablero en cada una de las partidas jugadas. Es posible indicar a la gente lo siguiente: el número de partidas a realizar, el jugador que utilizará el algoritmo MCTS y el número de iteraciones que realizará dicho algoritmo. Para cada partida, se siguen los siguientes pasos:
+
+\begin{enumerate}
+    \item Se inicializan el tablero de apertura, el turno inicial (\texttt{turno = 2}), correspondiente al jugador de las negras) y un historial (una lista vacía) que registrará todos los estados por los que pasará el tablero durante la partida.
+    \item Se inicializa un bucle que repetirá lo siguiente mientras el estado en el que nos encontremos no sea un estado terminal: se añade el estado actual del tablero al historial de estados y se procede a realizar un movimiento según el turno en el que nos encontremos.
+    \begin{enumerate}
+        \item Turno del agente MCTS: se elige un movimiento en función de lo indicado por el algoritmo MCTS. Si no hay movimientos disponibles se pasa turno.
+        \item Turno del rival: se elige un movimiento aleatorio. Si no hay movimientos disponibles, se pasa turno.
+	    \item En caso de que haya habido movimiento disponible para el jugador en cuestión, se coloca la ficha en el lugar indicado y se voltean las fichas afectadas por la colocación de la nueva ficha. Posteriormente, se pasa turno.
+    \end{enumerate}
+    \item Tras llegar a un estado detectado como terminal, se finaliza el bucle y se añade el estado final al historial de estados.
+    \item Se evalúa el resultado de la partida. Si el jugador indicado como parámetro al agente tiene más fichas en el tablero que su oponente, se guarda el valor \texttt{1}, si ocurre lo contrario se guarda el valor \texttt{-1} y si ninguno de los jugadores tiene más fichas que el otro se guarda el valor \texttt{0}.
+    \item Adicionalmente, se muestran en la consola datos como el estado final del tablero, la cantidad de fichas de cada jugador, etc.
+    \item Para cada uno de los estados guardados en el historial, se realiza lo siguiente:
+    \begin{enumerate}
+        \item Se convierte el estado a una fila de 64 números, definiendo cada número lo que hay en su correspondiente casilla dentro del tablero.
+        \item Se añade a la fila un número adicional, la recompensa obtenida en el paso \textbf{4.}
+	    \item Se escribe la fila en el archivo mencionado al principio de este apartado.
+    \end{enumerate}
+\end{enumerate}
+
+Finalmente, tras jugar todas las partidas indicadas, se guarda el archivo \texttt{datos\_otelo.csv} en la ruta especificada al agente. Dicho archivo contiene, en orden, todos los estados intermedios de todas las partidas jugadas, siendo posible observar la cantidad de veces que el jugador que utilizó MCTS perdió y cuántas veces dicho jugador ganó o, por lo menos, empató. Esos datos, como se explicará a continuación, serán utilizados para el entrenamiento de la red neuronal que sustituirá la elección aleatoria de movimientos en la función \texttt{default\_policy} del motor MCTS.
 
 \subsection{Diseño de la red neuronal}
 La red neuronal como se mencionó en la introduccion esta hecha con keras, para hacerla 
@@ -183,10 +204,17 @@ El modelo fue entrenado empleando estas técnicas en combinación, con barajado 
 
 
 
-\subsection{Agente adversario}
-Ejemplo.
+\subsection{Integración de la red neuronal en MCTS}
 
-Ejemplo.
+Para implementar la red neuronal en el algoritmo de Monte Carlo Tree Search (MCTS), se modificó su estructura tradicional sustituyendo la función \texttt{default\_policy} por una predicción directa proporcionada por la red neuronal entrenada. 
+
+Para llevar a cabo esta integración, se diseñó la función \texttt{estado\_a\_tensor}, encargada de transformar el estado del tablero de juego en un tensor de dimensiones $1 \times 8 \times 8 \times 2$, adecuado como entrada para la red neuronal. 
+
+Durante la ejecución de la nueva \texttt{default\_policy}, se invoca directamente a la red neuronal pasando como entrada el tensor previamente construido. La red devuelve una estimación en el intervalo $[-1, 1]$, que como previamente se mencionó representa la valoración del estado actual desde el punto de vista del jugador en turno. 
+
+\subsection{Integración con la interfaz gráfica}
+
+Para permitir la interacción del usuario con el nuevo agente mejorado, se adaptó la implementación previa de la interfaz gráfica del juego Otelo basada en la biblioteca \texttt{pygame}. En este nuevo flujo, al producirse una acción por parte del jugador humano, se actualiza inmediatamente el tablero en pantalla, tras lo cual se invoca al agente MCTS con red neuronal mediante su funcion mcts, ejecutando un número fijo de iteraciones definido por el usuario. Una vez completado el cálculo, se dibuja el movimiento seleccionado por la IA y se devuelve el turno al jugador. Este ciclo se repite hasta que se alcanza un estado terminal y finaliza la partida.
 
 \section{Pruebas y experimentación}
 Explica qué datos has obtenido, cómo se comporta el agente, etc. Puedes incluir tablas, gráficos, o descripciones.
