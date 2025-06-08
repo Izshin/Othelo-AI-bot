@@ -163,9 +163,25 @@ Este proceso se repite a lo largo de toda la matriz de entrada, desplazando el f
 
 
 \subsection{Entrenamiento de la red neuronal}
-Ejemplo.
 
-Ejemplo.
+El proceso de entrenamiento de la red neuronal se llevó a cabo utilizando inicialmente los datos generados por el agente MCTS básico. Una vez entrenado un primer modelo de la red, se implantó dicho modelo dentro del agente MCTS para generar nuevas partidas con decisiones guiadas por la red neuronal. Esta estrategia permite obtener estados de juego más sofisticados, al incorporar en la generación de datos conocimiento previamente aprendido, lo que contribuye a refinar progresivamente el comportamiento del agente.
+
+En cuanto a la configuración del entrenamiento, se optó por un tamaño de lote de 128 muestras y un máximo de 30 épocas. Para la validación, se reservó el 10\,\% del conjunto de datos en cada entrenamiento. Los valores óptimos de los hiperparámetros fueron determinados mediante un proceso de prueba y error.
+
+Con el objetivo de mejorar la eficiencia del entrenamiento y evitar problemas comunes como el sobreajuste o el sesgo de errores, se incorporaron varias estrategias:
+
+\begin{itemize}
+    \item \textbf{Reducción adaptativa de la tasa de aprendizaje}: Se empleó el callback \texttt{ReduceLROnPlateau} para reducir la tasa de aprendizaje en un 20\,\% cuando la pérdida de validación (\texttt{val\_loss}) no mejoraba durante 5 épocas consecutivas. Este mecanismo permite refinar el ajuste de los pesos, logrando que al llegar a un minimo local razonable se puedan hacer "micro ajustes" que permitan llegar al punto mas bajo de ese mínimo.
+
+    \item \textbf{Parada temprana}: Se utilizó el mecanismo de \texttt{EarlyStopping} para detener el entrenamiento si no se observaba mejora en la pérdida de validación durante 10 épocas consecutivas. Además, se restauraron automáticamente los pesos correspondientes a la mejor época validada. Esta medida permite ahorrar tiempo computacional y evitar sobreentrenamiento innecesario.
+
+    \item \textbf{Ponderación de clases}: Dado que los datos generados presentaban un cierto desbalance entre los distintos resultados posibles (victoria, empate, derrota), se aplicó una ponderación de clases para compensar esta desproporción. Esto se traduce en asignar mayor peso a las muestras menos frecuentes durante el cálculo de la función de pérdida, eliminando así el sesgo de la red a predecir de forma inexacta ciertos estados.
+\end{itemize}
+
+El modelo fue entrenado empleando estas técnicas en combinación, con barajado aleatorio de los datos en cada época. Esta configuración demostró ser efectiva para lograr una red neuronal capaz de evaluar estados de juego con buena precisión y generalización.
+
+
+
 
 \subsection{Agente adversario}
 Ejemplo.
