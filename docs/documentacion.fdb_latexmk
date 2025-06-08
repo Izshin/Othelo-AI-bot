@@ -1,5 +1,5 @@
 # Fdb version 4
-["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749401779.41084 0
+["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749425591.03525 0
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
   "bibliografia.bib" 0 -1 0 ""
   "documentacion.aux" 0 -1 0 "pdflatex"
@@ -7,7 +7,7 @@
   "documentacion.bbl"
   "documentacion.blg"
   (rewritten before read)
-["pdflatex"] 1749401778.21398 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749401779.41175 0
+["pdflatex"] 1749425589.76958 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749425591.03608 0
   "C:/Users/eloy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1749233344 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/eloy/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1749233337 24224573 f78a79b515f8aea858e331b76996f188 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -84,10 +84,12 @@
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1ptm.fd" 1585253778 817 61d7da1e9f9e74989b196d147e623736 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749401773 33042 117d5480f9782acbc1011a69ebc30555 ""
-  "documentacion.aux" 1749401778 1568 88e338e2d99194d66695f49336a4a036 "pdflatex"
+  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749425589 40626 86e866d877c89249538ff55069b6cb20 ""
+  "documentacion.aux" 1749425590 2204 88801866435a7fb5bf77e24e9f38a853 "pdflatex"
   "documentacion.bbl" 0 -1 0 "bibtex documentacion"
-  "documentacion.tex" 1749401773 33042 117d5480f9782acbc1011a69ebc30555 ""
+  "documentacion.tex" 1749425589 40626 86e866d877c89249538ff55069b6cb20 ""
+  "grafico_balances.png" 1749422787 59062 53d7225c764ee32927ea851a99a3adc9 ""
+  "grafico_resultados.png" 1749421029 20171 9ebbacccf4d2d612e15e13d13021bf84 ""
   (generated)
   "documentacion.aux"
   "documentacion.log"
