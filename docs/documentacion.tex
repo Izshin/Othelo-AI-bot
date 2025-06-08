@@ -150,7 +150,7 @@ Este agente se limita a jugar partidas contra un adversario que elige acciones a
     \end{enumerate}
 \end{enumerate}
 
-Finalmente, tras jugar todas las partidas indicadas, se guarda el archivo \texttt{datos\_otelo.csv} en la ruta especificada al agente. Dicho archivo, contiene, en orden, todos los estados intermedios de todas las partidas jugadas, siendo posible observar la cantidad de veces que el jugador que utilizó MCTS perdió y cuántas veces dicho jugador ganó o, por lo menos, empató. Esos datos, como se explicará a continuación, serán utilizados para el entrenamiento de la red neuronal que sustituirá la elección aleatoria de movimientos en la función \texttt{default\_policy} del motor MCTS.
+Finalmente, tras jugar todas las partidas indicadas, se guarda el archivo \texttt{datos\_otelo.csv} en la ruta especificada al agente. Dicho archivo contiene, en orden, todos los estados intermedios de todas las partidas jugadas, siendo posible observar la cantidad de veces que el jugador que utilizó MCTS perdió y cuántas veces dicho jugador ganó o, por lo menos, empató. Esos datos, como se explicará a continuación, serán utilizados para el entrenamiento de la red neuronal que sustituirá la elección aleatoria de movimientos en la función \texttt{default\_policy} del motor MCTS.
 
 \subsection{Diseño de la red neuronal}
 La red neuronal como se mencionó en la introduccion esta hecha con keras, para hacerla 
