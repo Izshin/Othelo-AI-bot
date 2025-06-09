@@ -179,4 +179,4 @@ entrenado = model_othello.fit(
 )
 
 """Por último, guardamos la red entrenada en .h5 para cargarla en el motor MCTS que integra la red."""
-model_othello.save("othello_neuronal_entrenada.h5")
+model_othello.save("red_neuronal/othello_neuronal_entrenada.h5")
