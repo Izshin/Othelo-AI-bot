@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1749489329.16028 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749489329.87003 0
+["pdflatex"] 1749490133.65776 "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749490134.43984 0
   "C:/Program Files/MiKTeX/tex/latex/cite/cite.sty" 1425353482 26218 19edeff8cdc2bcb704e8051dc55eb5a7 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/ot1ptm.fd" 1585253778 1007 15056f4a61917ceed3a44e4ac11fcc52 ""
   "C:/Program Files/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
@@ -83,9 +83,9 @@
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/ieeetran/IEEEtran.cls" 1440627644 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1704400941 30006 57b07afb710ee2f649c65cfbafda39c1 ""
   "C:/Users/ivanf/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749489328 44519 0eadf558b4fc4685cca4c3d7d64eebed ""
-  "documentacion.aux" 1749489329 2310 f1d7dbbd5e1f4f31c0a32a88a9c79a76 "pdflatex"
-  "documentacion.tex" 1749489328 44519 0eadf558b4fc4685cca4c3d7d64eebed ""
+  "c:/Users/ivanf/Desktop/Escritorio/Uni/IA/Otelo/otelo/docs/documentacion.tex" 1749490132 44844 6d5879406706fc856a5b27e099a5f6ff ""
+  "documentacion.aux" 1749490134 2417 38641c048b490f8a3006fa54fd79dd57 "pdflatex"
+  "documentacion.tex" 1749490132 44844 6d5879406706fc856a5b27e099a5f6ff ""
   "grafico_balances.png" 1749468920 59062 53d7225c764ee32927ea851a99a3adc9 ""
   "grafico_resultados.png" 1749468920 20171 9ebbacccf4d2d612e15e13d13021bf84 ""
   (generated)

@@ -162,22 +162,22 @@ A continuación, se describen las capas que componen la arquitectura de la red n
 
 \begin{itemize}
     \item \textbf{Capa de entrada}: Se encarga de tomar los datos de entrada, el input ya ha sido explicado 
-    \item \textbf{Capas convolucionales}: Las primeras capas de la red neuronal son de tipo convolucional y utilizan filtros de tamaño $3 \times 3$. Estas capas se inspiran en el funcionamiento de las redes convolucionales tradicionales aplicadas al procesamiento de imágenes, adaptadas aquí al tablero de Otelo, representado como una matriz de dimensiones $8 \times 8$ con dos canales.
+    \item \textbf{Capas convolucionales}\cite{rusin2020}: Las primeras capas de la red neuronal son de tipo convolucional y utilizan filtros de tamaño $3 \times 3$. Estas capas se inspiran en el funcionamiento de las redes convolucionales tradicionales aplicadas al procesamiento de imágenes, adaptadas aquí al tablero de Otelo, representado como una matriz de dimensiones $8 \times 8$ con dos canales.
 
 Cada filtro o \textit{kernel} o informalmente hablando \textit{"plantilla"} convolucional actúa como una ventana entrenable que recorre la matriz de entrada y busca patrones locales que puedan ser relevantes para la toma de decisiones del agente. Matemáticamente, un filtro de tamaño $3 \times 3$ posee un conjunto de nueve pesos (uno por cada celda del filtro), y su aplicación sobre una subregión del tablero consiste en realizar una operación de convolución: multiplicar cada uno de esos pesos por el valor correspondiente de la celda del tablero en la que se superpone, y sumar todos los productos obtenidos. Esta suma constituye un único valor de salida que representa la "respuesta" del filtro ante dicha subregión.
 
 Este proceso se repite a lo largo de toda la matriz de entrada, desplazando el filtro sobre cada posible submatriz $3 \times 3$ del tablero. Como resultado, se genera un nuevo mapa de activación (o tablero de salida) que contiene, en cada posición, el valor calculado mediante la operación descrita. Este mapa o "nuevo tablero" representa una transformación intermedia de los datos de entrada que representan ciertos patrones en el juego, como columnas de fichas, filas de fichas negras, casillas vacías...
 
  Al aplicar un filtro, la posición central de la región sobre la que se aplicó el mismo pasa a ser el nuevo valor en la "celda" del mapa de salida. Así que como cada capa convolucional va recibiendo "tableros" enteros con identificaciones de patrones de la anterior, en cada capa los patrones detectados serán mas abstractos. Lo que se podría traducir a un "entendimiento" mas profundo del juego, o a la posibilidad de visualizar jugadas mas estratégicas por parte del agente
-\item \textbf{Capa de aplanado}: Esta capa transforma los tableros (tensores tridimensionales, $8 \times 8 \times 128$) generados por la última capa convolucional en un vector unidimensional. Esta operación permite conectar las capas convolucionales, que trabajan sobre estructuras espaciales, con las capas densas posteriores, que operan sobre vectores. En nuestro caso, el resultado es un vector de 8192 elementos.
+\item \textbf{Capa de aplanado}\cite{rusin2020}: Esta capa transforma los tableros (tensores tridimensionales, $8 \times 8 \times 128$) generados por la última capa convolucional en un vector unidimensional. Esta operación permite conectar las capas convolucionales, que trabajan sobre estructuras espaciales, con las capas densas posteriores, que operan sobre vectores. En nuestro caso, el resultado es un vector de 8192 elementos.
 
 \item \textbf{Capa de desactivación (\texttt{Dropout})}: Se introduce una capa \texttt{Dropout} con una tasa de desactivación del 50\,\% para reducir el riesgo de sobreajuste. Durante el entrenamiento, esta capa apaga aleatoriamente la mitad de las neuronas que alimentan la siguiente capa. Al estar apagadas su output no se generará y por ende el ajuste será mas acotado.
 
 \item \textbf{Capa densa}: A continuación, se emplea una capa totalmente conectada (\texttt{Dense}) que reduce los 8192 valores obtenidos tras el aplanado a una representación más compacta de 256 dimensiones. Estos valores pueden interpretarse como una codificación intermedia que captura la cantidad y relevancia de ciertos patrones estratégicos en el estado actual del tablero.
 
-\item \textbf{Capa de salida}: Finalmente, se utiliza una capa densa con una única neurona y función de activación tangente hiperbólica (\texttt{tanh}), que produce una salida en el rango $[-1, 1]$. Este valor representa una estimación de lo favorable o desfavorable que es una determinada posición para el jugador actual.
+\item \textbf{Capa de salida}\cite{rusin2020}: Finalmente, se utiliza una capa densa con una única neurona y función de activación tangente hiperbólica (\texttt{tanh}), que produce una salida en el rango $[-1, 1]$. Este valor representa una estimación de lo favorable o desfavorable que es una determinada posición para el jugador actual.
 
-    \item \textbf{Optimizador y función de pérdida}: Para la optimización del modelo se ha utilizado el algoritmo \texttt{Adam} (Adaptive Moment Estimation), ampliamente empleado en redes neuronales profundas. Este optimizador ajusta de forma adaptativa las tasas de aprendizaje de cada parámetro, lo cual resulta especialmente útil en escenarios con estructuras complejas como las redes convolucionales. En cuanto a la función de pérdida, se ha empleado el error cuadrático medio (\texttt{MSE}), ya que el objetivo de la red es aproximar una evaluación numérica continua del estado del juego en el intervalo $[-1, 1]$.
+    \item \textbf{Optimizador y función de pérdida}: Para la optimización del modelo se ha utilizado el algoritmo \texttt{Adam} (Adaptive Moment Estimation)\cite{rusin2020}, ampliamente empleado en redes neuronales profundas. Este optimizador ajusta de forma adaptativa las tasas de aprendizaje de cada parámetro, lo cual resulta especialmente útil en escenarios con estructuras complejas como las redes convolucionales. En cuanto a la función de pérdida, se ha empleado el error cuadrático medio (\texttt{MSE}), ya que el objetivo de la red es aproximar una evaluación numérica continua del estado del juego en el intervalo $[-1, 1]$.
 \end{itemize}
 
 
@@ -292,7 +292,10 @@ En definitiva, aunque el uso de la red neuronal añade un coste computacional co
 S.~Russell and P.~Norvig, \emph{Artificial Intelligence: A Modern Approach}, 4th~ed. Pearson, 2020, ch.~5, ``Adversarial Search.''
 
 \bibitem{browne2012}
-C.~B.~Browne, E.~Powley, D.~Whitehouse, S.~M.~Lucas, P.~I.~Cowling, P.~Rohlfshagen, S.~Tavener, D.~Perez, S.~Samothrakis, and S.~Colton, ``A survey of Monte Carlo tree search methods,'' \emph{IEEE Transactions on Computational Intelligence and AI in Games}, vol.~4, no.~1, pp.~1--43, 2012. [Online]. Available: \url{https://ieeexplore.ieee.org/document/6145622}
+C.~B.~Browne, E.~Powley, D.~Whitehouse, S.~M.~Lucas, P.~I.~Cowling, P.~Rohlfshagen, S.~Tavener, D.~Perez, S.~Samothrakis, and S.~Colton, ``A survey of Monte Carlo tree search methods,'' \emph{IEEE Transactions on Computational Intelligence and AI in Games}, vol.~4, no.~1, pp.~1--43, 2012. [Online]. Available: \url{https://ieeexplore.ieee.org/document/6145622} 
+
+\bibitem{rusin2020}
+D.~Rusin, ``Imitating Players in the Game of Othello Using Neural Networks,'' \emph{Medium}, 2020. [Online]. Available: \url{https://medium.com/@dimitri.rusin/imitating-players-in-the-game-of-othello-using-neural-networks-dab86f7d0508}
 
 \end{thebibliography}
 
