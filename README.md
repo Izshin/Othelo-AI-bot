@@ -5,4 +5,4 @@ Para jugar contra el agente es necesario ejecutar el script otelo.py, además de
 
 Para observar una partida entre dos agentes se debe ejecutar el script otelo_ia_vs_ia.py.
 
-La documentación de este proyecto se encuentra en docs/documentación.pdf
+La documentación de este proyecto se encuentra en docs/documentacion.pdf
