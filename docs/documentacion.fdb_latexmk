@@ -1,13 +1,5 @@
 # Fdb version 4
-["bibtex documentacion"] 0 "documentacion.aux" "documentacion.bbl" "documentacion" 1749425591.03525 0
-  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "bibliografia.bib" 0 -1 0 ""
-  "documentacion.aux" 0 -1 0 "pdflatex"
-  (generated)
-  "documentacion.bbl"
-  "documentacion.blg"
-  (rewritten before read)
-["pdflatex"] 1749425589.76958 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749425591.03608 0
+["pdflatex"] 1749461790.11322 "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" "documentacion.pdf" "documentacion" 1749461790.83956 0
   "C:/Users/eloy/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1749233344 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/eloy/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1749233337 24224573 f78a79b515f8aea858e331b76996f188 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -31,12 +23,19 @@
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/times/ptmri8r.tfm" 1136768654 4640 532ca3305aad10cc01d769f3f91f1029 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/times/ptmri8t.tfm" 1136768654 6944 94c55ad86e6ea2826f78ba2240d50df9 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1233951854 916 f87d7c45f9c908e672703b83b72241a3 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam5.tfm" 1233951854 924 9904cf1d39e9767e7a3622f2a125a565 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msam7.tfm" 1233951854 928 2dc8d444221b7a635bb58038579b861a ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm10.tfm" 1233951854 908 2921f8a10601f252058503cc6570e581 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm5.tfm" 1233951854 940 75ac932a52f80982a9f8ea75d03a34cf ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/symbols/msbm7.tfm" 1233951854 940 228d6584342e91276bf566bcf9716b83 ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi6.tfm" 1136765053 1512 f21f83efb36853c0b70002322c1ab3ad ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmmi8.tfm" 1136765053 1520 eccf95517727cb11801f4f1aee3a21b4 ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr6.tfm" 1136765053 1300 b62933e007d01cfd073f79b963c01526 ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr8.tfm" 1136765053 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy6.tfm" 1136765053 1116 933a60c408fc0a863a92debe84b2d294 ""
+  "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmsy8.tfm" 1136765053 1120 8b7d695260f3cff42e636090a8002094 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1247596667 30251 6afa5cb1d0204815a708a080681d4674 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1247596667 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1247596667 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -84,10 +83,9 @@
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1pcr.fd" 1585253778 835 d5895e9edc628f2be019beb2c0ec66df ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/psnfss/t1ptm.fd" 1585253778 817 61d7da1e9f9e74989b196d147e623736 ""
   "C:/Users/eloy/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749425589 40626 86e866d877c89249538ff55069b6cb20 ""
-  "documentacion.aux" 1749425590 2204 88801866435a7fb5bf77e24e9f38a853 "pdflatex"
-  "documentacion.bbl" 0 -1 0 "bibtex documentacion"
-  "documentacion.tex" 1749425589 40626 86e866d877c89249538ff55069b6cb20 ""
+  "c:/Users/eloy/Documents/Universidad/IA/Trabajo/Repositorio/otelo/docs/documentacion.tex" 1749461788 44309 3aa3e5ef64d20186da18bc1c56c4e29b ""
+  "documentacion.aux" 1749461790 2310 3e5998870d0b58307e0aadae48509af6 "pdflatex"
+  "documentacion.tex" 1749461788 44309 3aa3e5ef64d20186da18bc1c56c4e29b ""
   "grafico_balances.png" 1749422787 59062 53d7225c764ee32927ea851a99a3adc9 ""
   "grafico_resultados.png" 1749421029 20171 9ebbacccf4d2d612e15e13d13021bf84 ""
   (generated)
