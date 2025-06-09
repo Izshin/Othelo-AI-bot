@@ -44,27 +44,26 @@ Monte Carlo Tree Search, MCTS, Upper Confidence Bound for Trees, UCT, Othello, O
 
 % ---------- Secciones ----------
 \section{Introducción}
-En muchos juegos podemos ver IA's que nos permiten jugar contra ellas \cite{russell2020}, ya sea como forma de introducirnos en el juego, o como maximo exponente del mismo.
-Con el objetivo de aprender a crearlas, hemos creado una IA que aprende a jugar al juego de Otelo, para ello logramos crear un conjunto de datos con un
-algoritmo base (Monte Carlo Tree Search, MCTS) y posteriormente usamos esos datos para entrenar una red neuronal implementada en ese mismo algoritmo que pudiera perfeccionar las jugadas a lo largo de la 
-partida. En este documento estudiaremos como hemos logrado implementar todo esto, además de los resultados obtenidos al enfrentar la IA con red neuronal,
-contra la que no tenia. Las principales dificultades al plantearnos esta tarea fueron, la elección de la estructura de la red neuronal y sus hiperparámetros, pues para
-que la red mejorará había que elegir una tasa de aprendizaje efectiva y era imperativo el hacer una elección lógica de la arquitectura, puesto que hay numerosas
-formas de montar una red neuronal y cada una tiene sus ventajas e inconvenientes para cada tarea. Ademas de esto, tambien planteo una ligera dificultad la funcion
-de tree policy en el algoritmo de Montecarlo, pues era algo mas compleja que el resto.
+
+La presencia de agentes inteligentes capaces de jugar contra seres humanos se ha consolidado como una herramienta habitual tanto para el aprendizaje como para el entretenimiento en numerosos juegos \cite{russell2020}. Estos sistemas no solo permiten a los usuarios mejorar sus habilidades mediante la práctica, sino que también representan en muchos casos el nivel más avanzado de competencia en el propio juego.
+
+Con el propósito de explorar los fundamentos del diseño de agentes autónomos, en este trabajo se ha desarrollado una inteligencia artificial capaz de aprender a jugar al juego de Otelo (también conocido como Reversi). El enfoque seguido combina MCTS y redes neuronales. En una primera fase, se generó un conjunto de datos mediante un agente basado en el algoritmo Monte Carlo Tree Search (MCTS), el cual disputó partidas contra oponentes que realizaban movimientos aleatorios. Posteriormente, estos datos fueron utilizados para entrenar una red neuronal, la cual se integró en el propio algoritmo MCTS con el objetivo de mejorar progresivamente la calidad de las decisiones tomadas durante el juego.
+
+El presente artículo detalla tanto el proceso de implementación del sistema como los resultados experimentales obtenidos al enfrentar al agente mejorado (que incorpora red neuronal) contra el agente base (basado únicamente en MCTS clásico). Entre los principales retos encontrados durante el desarrollo, destacan la elección adecuada de la arquitectura de la red neuronal y de sus hiperparámetros, dado que pequeñas variaciones en la tasa de aprendizaje, el número de capas o la cantidad de neuronas pueden tener un impacto significativo en el rendimiento del agente. Adicionalmente, se prestó especial atención a la implementación de la política de expansión (\texttt{tree policy}) del algoritmo MCTS, la cual presentó una complejidad mayor en comparación con otros componentes del sistema.
+
 \section{Preliminares}
-Partimos de un agente que implementa montecarlo que se encarga de jugar partidas contra movimientos aleatorios, este guardará los estados intermedios 
-en la partida y a cada uno se le asignará si, al acabar la partida, ganó, perdió o empató. Para representar estos estados hemos optado por hacer un csv, 
-en el cual cada fila está formada de 65 elementos, los primeros 64 son el estado del tablero en orden, cada elemento es una casilla y si es 0 no hay nada,
-si es 1 hay ficha blanca, si hay 2 hay ficha negra. El ultimo de los 65 elementos es la etiqueta que representa el resultado final de esa partida, propagado a cada estado intermedio,
--1 si perdió, 0 si empató, 1 si ganó. Tanto para enfrentarse a la IA como jugador, como para enfrentar a ambas IA entre sí, implementamos pygame, del cual se tratará su implementación mas adelante.
-Para el diseño y entrenamiento de la red usamos tensorflow y keras, y para el tratamiento de datos empleamos mayoritariamente numpy, pues implementa muchas funciones utiles para presentar y amoldar
-estos datos.
+
+La generación inicial de datos parte de un agente que implementa una versión básica del algoritmo MCTS. Este agente disputa partidas contra oponentes que realizan jugadas aleatorias, almacenando los distintos estados intermedios del tablero durante cada partida. Una vez finalizada la partida, se etiqueta cada estado con el resultado obtenido: victoria, derrota o empate, según corresponda. Este procedimiento permite construir un conjunto de datos anotado de forma automática, que será posteriormente utilizado para el entrenamiento del modelo.
+
+Para representar los datos, se optó por almacernarlos en archivos \texttt{.csv}. Cada fila del archivo contiene 65 elementos: los primeros 64 corresponden al estado del tablero (8 filas por 8 columnas), codificado como enteros donde el valor 0 representa una casilla vacía, 1 una ficha blanca y 2 una ficha negra. El elemento 65 representa la etiqueta asociada al resultado final de la partida en la que se generó dicho estado, propagado a todos los estados intermedios. Las etiquetas toman valores en $\{-1, 0, 1\}$ para representar derrota, empate y victoria, respectivamente.
+
+Para la interacción con el usuario y la visualización de las partidas, se desarrolló una interfaz gráfica basada en la biblioteca \texttt{pygame}, que permite tanto disputar partidas contra el agente como observar enfrentamientos entre distintas versiones de la inteligencia artificial.
+
+El diseño y entrenamiento de la red neuronal se llevó a cabo utilizando las bibliotecas de \texttt{Keras} y \texttt{TensorFlow}, mientras que para el procesamiento y transformación de los datos se empleó mayoritariamente la biblioteca \texttt{NumPy}, dadas sus capacidades optimizadas para manejar y manipular matrices y datos de distintos tipos.
+A continuacion se expone como se ha hecho esto en detalle.
 
 \section{Implementación}
-Para la implementación del proyecto se han realizado los siguientes pasos: se ha creado una versión inicial de Otelo utilizando Pygame, se ha creado un agente básico utilizando el algoritmo de Monte Carlo Tree Search \cite{browne2012}, se han generado datos a partir de ese agente básico, se ha creado y, posteriormente, entrenado una red neuronal a partir de los datos generados, se ha utilizado la red neuronal como sustituta de una de las funciones de las que hace uso la implementación inicial del algoritmo MCTS y, finalmente, se ha adaptado la versión inicial de Otelo (en la que no se podía jugar contra ningún adversario) para que el agente desarrollado pudiese jugar contra el usuario.
 
-A continuación, desarrollamos la implementación de cada uno de los pasos mencionados.
 
 \subsection{Otelo en \texttt{pygame}}
 El primer paso a seguir en la implementación del proyecto fue la creación del juego Otelo (sin presencia de un agente contra el que jugar) que nos serviría como base para crear tanto el agente MCTS como el agente final que haría uso de la red neuronal.
@@ -153,15 +152,14 @@ Este agente se limita a jugar partidas contra un adversario que elige acciones a
 Finalmente, tras jugar todas las partidas indicadas, se guarda el archivo \texttt{datos\_otelo.csv} en la ruta especificada al agente. Dicho archivo contiene, en orden, todos los estados intermedios de todas las partidas jugadas, siendo posible observar la cantidad de veces que el jugador que utilizó MCTS perdió y cuántas veces dicho jugador ganó o, por lo menos, empató. Esos datos, como se explicará a continuación, serán utilizados para el entrenamiento de la red neuronal que sustituirá la elección aleatoria de movimientos en la función \texttt{default\_policy} del motor MCTS.
 
 \subsection{Diseño de la red neuronal}
-La red neuronal como se mencionó en la introduccion esta hecha con keras, para hacerla 
-creamos un input de la forma (8,8,2) lo que significa que tomaremos un tablero de 8x8 casillas y cada casilla
-sera un canal doble, esto no es mas que una lista con dos valores binarios, si ambos son 0 la casilla estará vacía
-si el primero es 1, la casilla estará ocupada por una ficha blanca, si el segundo es 1 entonces hay una ficha negra.
+La red neuronal utilizada en este trabajo ha sido desarrollada empleando la biblioteca \texttt{Keras}. Como entrada, el modelo recibe tensores de dimensión $(8, 8, 2)$, donde cada uno de los $8 \times 8$ elementos del tablero se representa mediante un vector de dos canales binarios. Esta codificación permite distinguir de forma explícita la presencia de fichas blancas y negras: si ambos canales son cero, la casilla se considera vacía; si el primer canal toma el valor 1, la casilla contiene una ficha blanca; y si el segundo canal es igual a 1, se trata de una ficha negra.
 
 
-Se hace de esta forma puesto que, de esta manera la red no deberá "adivinar" que el valor 2 es para las negras y el 1 para las blancas
-de otra forma la red podría interpretar que, por ejemplo, 2 es "mejor" que 1, entre otras complicaciones.
-Así pues la red neuronal se compone de varias capas:
+
+Esta representación se adopta con el fin de evitar que la red neuronal tenga que inferir arbitrariamente que el valor 1 corresponde a las fichas blancas y el valor 2 a las negras. Una codificación escalar de este tipo podría inducir al modelo a interpretar erróneamente que el valor 2 representa una opción preferible o más fuerte que el 1, introduciendo un sesgo no deseado en el aprendizaje. Mediante una codificación por canales binarios separados, se garantiza una representación semánticamente neutra y equitativa para ambos jugadores.
+
+A continuación, se describen las capas que componen la arquitectura de la red neuronal:
+
 \begin{itemize}
     \item \textbf{Capa de entrada}: Se encarga de tomar los datos de entrada, el input ya ha sido explicado 
     \item \textbf{Capas convolucionales}: Las primeras capas de la red neuronal son de tipo convolucional y utilizan filtros de tamaño $3 \times 3$. Estas capas se inspiran en el funcionamiento de las redes convolucionales tradicionales aplicadas al procesamiento de imágenes, adaptadas aquí al tablero de Otelo, representado como una matriz de dimensiones $8 \times 8$ con dos canales.
@@ -170,7 +168,7 @@ Cada filtro o \textit{kernel} o informalmente hablando \textit{"plantilla"} conv
 
 Este proceso se repite a lo largo de toda la matriz de entrada, desplazando el filtro sobre cada posible submatriz $3 \times 3$ del tablero. Como resultado, se genera un nuevo mapa de activación (o tablero de salida) que contiene, en cada posición, el valor calculado mediante la operación descrita. Este mapa o "nuevo tablero" representa una transformación intermedia de los datos de entrada que representan ciertos patrones en el juego, como columnas de fichas, filas de fichas negras, casillas vacías...
 
- Al aplicar un filtro, la posición central de la región sobre la que se aplicó el mismo pasa a ser el nuevo valor en la "celda" del mapa de salida. Así que como cada capa convolucional va recibiendo "tableros" enteros con identificaciones de patrones de la anterior, a cada capa los patrones detectados son mas abstractos. Lo que se podría traducir a un "entendimiento" mas profundo del juego, o a la posibilidad de visualizar jugadas mas estratégicas por parte del agente
+ Al aplicar un filtro, la posición central de la región sobre la que se aplicó el mismo pasa a ser el nuevo valor en la "celda" del mapa de salida. Así que como cada capa convolucional va recibiendo "tableros" enteros con identificaciones de patrones de la anterior, en cada capa los patrones detectados serán mas abstractos. Lo que se podría traducir a un "entendimiento" mas profundo del juego, o a la posibilidad de visualizar jugadas mas estratégicas por parte del agente
 \item \textbf{Capa de aplanado}: Esta capa transforma los tableros (tensores tridimensionales, $8 \times 8 \times 128$) generados por la última capa convolucional en un vector unidimensional. Esta operación permite conectar las capas convolucionales, que trabajan sobre estructuras espaciales, con las capas densas posteriores, que operan sobre vectores. En nuestro caso, el resultado es un vector de 8192 elementos.
 
 \item \textbf{Capa de desactivación (\texttt{Dropout})}: Se introduce una capa \texttt{Dropout} con una tasa de desactivación del 50\,\% para reducir el riesgo de sobreajuste. Durante el entrenamiento, esta capa apaga aleatoriamente la mitad de las neuronas que alimentan la siguiente capa. Al estar apagadas su output no se generará y por ende el ajuste será mas acotado.
@@ -219,16 +217,7 @@ Para permitir la interacción del usuario con el nuevo agente mejorado, se adapt
 \section{Pruebas y experimentación}
 La experimentación y las pruebas realizadas han girado en torno al entrenamiento de la red neuronal y a la evaluación del agente MCTS que hace uso de dicha red neuronal.
 
-Durante el proceso de entrenamiento de la red neuronal para evaluar posiciones de Otelo, se probó empíricamente con distintos valores para el número de épocas, ajustando este parámetro mediante ensayo y error. Tras varias pruebas, se decidió que treinta épocas sería el número más adecuado, pues el añadido de más épocas no daba los resultados esperados (en otras palabras, no causaba un impacto significativo en la eficiencia de la red neuronal). El objetivo era encontrar un equilibrio adecuado entre el rendimiento del modelo y el tiempo de entrenamiento, evitando tanto el sobreajuste como el subentrenamiento.
-
-Para reforzar este proceso, se incorporaron dos mecanismos clave:
-
-\begin{itemize}
-    \item \textbf{EarlyStopping}, que detiene el entrenamiento si no se detecta mejora en el conjunto de validación durante un número determinado de épocas (en nuestro caso, 10). Esto permite evitar un sobreentrenamiento innecesario y preservar los mejores pesos encontrados.
-    \item \textbf{ReduceLROnPlateau}, que reduce la tasa de aprendizaje si la pérdida de validación deja de mejorar tras 5 épocas consecutivas. Esta estrategia ayuda a afinar el descenso de gradiente una vez que el modelo se aproxima a un mínimo local, permitiendo mejoras más precisas en las últimas fases del entrenamiento.
-\end{itemize}
-
-Ambos mecanismos fueron esenciales para automatizar el control del entrenamiento sin necesidad de un ajuste manual constante, y contribuyeron a mejorar la generalización del modelo.
+Durante el proceso de entrenamiento de la red neuronal para evaluar posiciones de Otelo, se probó empíricamente con distintos valores para el número de épocas, ajustando este parámetro mediante ensayo y error. Tras varias pruebas, se decidió que treinta épocas sería el número más adecuado, pues el añadido de más épocas no daba los resultados esperados (en otras palabras, no causaba un impacto significativo en la eficiencia de la red neuronal). El objetivo era encontrar un equilibrio adecuado entre el rendimiento del modelo y el tiempo de entrenamiento.
 
 En cuanto a las pruebas realizadas al agente MCTS final, se han dividido en dos tipos de pruebas: las pruebas "IA contra IA" y las pruebas "IA contra humano".
 
