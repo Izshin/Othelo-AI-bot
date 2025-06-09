@@ -44,9 +44,9 @@ Monte Carlo Tree Search, MCTS, Upper Confidence Bound for Trees, UCT, Othello, O
 
 % ---------- Secciones ----------
 \section{Introducción}
-En muchos juegos podemos ver IA's que nos permiten jugar contra ellas, ya sea como forma de introducirnos en el juego, o como maximo exponente del mismo.
+En muchos juegos podemos ver IA's que nos permiten jugar contra ellas \cite{russell2020}, ya sea como forma de introducirnos en el juego, o como maximo exponente del mismo.
 Con el objetivo de aprender a crearlas, hemos creado una IA que aprende a jugar al juego de Otelo, para ello logramos crear un conjunto de datos con un
-algoritmo base (Montecarlo) y posteriormente usamos esos datos para entrenar una red neuronal implementada en ese mismo algoritmo que pudiera perfeccionar las jugadas a lo largo de la 
+algoritmo base (Monte Carlo Tree Search, MCTS) y posteriormente usamos esos datos para entrenar una red neuronal implementada en ese mismo algoritmo que pudiera perfeccionar las jugadas a lo largo de la 
 partida. En este documento estudiaremos como hemos logrado implementar todo esto, además de los resultados obtenidos al enfrentar la IA con red neuronal,
 contra la que no tenia. Las principales dificultades al plantearnos esta tarea fueron, la elección de la estructura de la red neuronal y sus hiperparámetros, pues para
 que la red mejorará había que elegir una tasa de aprendizaje efectiva y era imperativo el hacer una elección lógica de la arquitectura, puesto que hay numerosas
@@ -62,7 +62,7 @@ Para el diseño y entrenamiento de la red usamos tensorflow y keras, y para el t
 estos datos.
 
 \section{Implementación}
-Para la implementación del proyecto se han realizado los siguientes pasos: se ha creado una versión inicial de Otelo utilizando Pygame, se ha creado un agente básico utilizando el algoritmo de Monte Carlo Tree Search, se han generado datos a partir de ese agente básico, se ha creado y, posteriormente, entrenado una red neuronal a partir de los datos generados, se ha utilizado la red neuronal como sustituta de una de las funciones de las que hace uso la implementación inicial del algoritmo MCTS y, finalmente, se ha adaptado la versión inicial de Otelo (en la que no se podía jugar contra ningún adversario) para que el agente desarrollado pudiese jugar contra el usuario.
+Para la implementación del proyecto se han realizado los siguientes pasos: se ha creado una versión inicial de Otelo utilizando Pygame, se ha creado un agente básico utilizando el algoritmo de Monte Carlo Tree Search \cite{browne2012}, se han generado datos a partir de ese agente básico, se ha creado y, posteriormente, entrenado una red neuronal a partir de los datos generados, se ha utilizado la red neuronal como sustituta de una de las funciones de las que hace uso la implementación inicial del algoritmo MCTS y, finalmente, se ha adaptado la versión inicial de Otelo (en la que no se podía jugar contra ningún adversario) para que el agente desarrollado pudiese jugar contra el usuario.
 
 A continuación, desarrollamos la implementación de cada uno de los pasos mencionados.
 
@@ -217,14 +217,96 @@ Durante la ejecución de la nueva \texttt{default\_policy}, se invoca directamen
 Para permitir la interacción del usuario con el nuevo agente mejorado, se adaptó la implementación previa de la interfaz gráfica del juego Otelo basada en la biblioteca \texttt{pygame}. En este nuevo flujo, al producirse una acción por parte del jugador humano, se actualiza inmediatamente el tablero en pantalla, tras lo cual se invoca al agente MCTS con red neuronal mediante su funcion mcts, ejecutando un número fijo de iteraciones definido por el usuario. Una vez completado el cálculo, se dibuja el movimiento seleccionado por la IA y se devuelve el turno al jugador. Este ciclo se repite hasta que se alcanza un estado terminal y finaliza la partida.
 
 \section{Pruebas y experimentación}
-Explica qué datos has obtenido, cómo se comporta el agente, etc. Puedes incluir tablas, gráficos, o descripciones.
+La experimentación y las pruebas realizadas han girado en torno al entrenamiento de la red neuronal y a la evaluación del agente MCTS que hace uso de dicha red neuronal.
+
+Durante el proceso de entrenamiento de la red neuronal para evaluar posiciones de Otelo, se probó empíricamente con distintos valores para el número de épocas, ajustando este parámetro mediante ensayo y error. Tras varias pruebas, se decidió que treinta épocas sería el número más adecuado, pues el añadido de más épocas no daba los resultados esperados (en otras palabras, no causaba un impacto significativo en la eficiencia de la red neuronal). El objetivo era encontrar un equilibrio adecuado entre el rendimiento del modelo y el tiempo de entrenamiento, evitando tanto el sobreajuste como el subentrenamiento.
+
+Para reforzar este proceso, se incorporaron dos mecanismos clave:
+
+\begin{itemize}
+    \item \textbf{EarlyStopping}, que detiene el entrenamiento si no se detecta mejora en el conjunto de validación durante un número determinado de épocas (en nuestro caso, 10). Esto permite evitar un sobreentrenamiento innecesario y preservar los mejores pesos encontrados.
+    \item \textbf{ReduceLROnPlateau}, que reduce la tasa de aprendizaje si la pérdida de validación deja de mejorar tras 5 épocas consecutivas. Esta estrategia ayuda a afinar el descenso de gradiente una vez que el modelo se aproxima a un mínimo local, permitiendo mejoras más precisas en las últimas fases del entrenamiento.
+\end{itemize}
+
+Ambos mecanismos fueron esenciales para automatizar el control del entrenamiento sin necesidad de un ajuste manual constante, y contribuyeron a mejorar la generalización del modelo.
+
+En cuanto a las pruebas realizadas al agente MCTS final, se han dividido en dos tipos de pruebas: las pruebas "IA contra IA" y las pruebas "IA contra humano".
+
+\subsection{Pruebas IA contra IA}
+Para evaluar realmente la utilidad de la red neuronal, vimos necesario enfrentar a los dos agentes MCTS creados, tanto el que cuenta con una red neuronal como el que no hace uso de esta. Para ello, contamos con el script \texttt{otelo\_ia\_vs\_ia.py} que ejecuta el Otelo implementado de manera normal, solo que el usuario no puede interferir en la partida y sólo puede observar las distintas acciones que llevan a cabo los dos agentes.
+
+Las pruebas consistieron en jugar distintas partidas modificando el número de iteraciones del algoritmo MCTS tanto para un agente como para el otro. Primero se jugaron quince partidas en las que ambos agentes realizaban el mismo número de iteraciones (ochenta, concretamente). Posteriormente, se jugaron otras quince partidas en las que el agente MCTS "clásico" (es decir, el que no utiliza la red neuronal) realizaba cien iteraciones y el agente de la red neuronal realizaba sólo cincuenta. Finalmente, se hizo la prueba contraria, es decir, se jugaron quince partidas en las que el agente de la red neuronal realizaba cien iteraciones y el agente original realizaba cincuenta. En todas las partidas simuladas el agente que hacía uso de la red neuronal utilizaba las fichas negras y su adversario las fichas blancas, lógicamente.
+
+Tras la simulación de todas las partidas se registraron los resultados mostrados en la figura~\ref{fig:resultados}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{grafico_resultados.png}
+    \caption{Comparación de los resultados obtenidos.}
+    \label{fig:resultados}
+\end{figure}
+
+Como es posible observar, la versión del agente con red neuronal que mejor resultados obtuvo fue la de cien iteraciones con doce victorias y tres derrotas. La versión de ochenta iteraciones sólo obtuvo diez victorias y cinco derrotas mientras que la versión de sólo cincuenta iteraciones empató dos veces con su adversario, además de lograr la victoria nueve veces y perder otras cuatro.
+
+Adicionalmente, se analizó el balance de fichas en cada partida y se obtuvo lo mostrado en la figura~\ref{fig:balances}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.45\textwidth]{grafico_balances.png}
+    \caption{Comparación de los balances de las distintas partidas.}
+    \label{fig:balances}
+\end{figure}
+
+El balance promedio que obtuvo el agente de cien iteraciones fue de \textbf{14,87} fichas, el de ochenta de \textbf{5,46} y el de cincuenta de \textbf{5,6}, todos en positivo. Podemos establecer una clara relación entre la efectivad del agente y: a) el número de iteraciones realizadas en el algoritmo MCTS, tanto para el agente que usa la red neuronal como para el agente que no la utiliza; b) el uso de la red neuronal a la hora de realizar las simulaciones en el algoritmo MCTS, en lugar de la elección aleatoria de movimientos.
+
+Además de los resultados finales, debido a la posibilidad de poder observar los estados intermedios del tablero durante las cuarenta y cinco partidas jugadas en total, pudimos analizar (de manera superficial) tanto los movimientos realizados por los agentes como el tiempo que tardaron en hacer los movimientos. Por un lado, la tardanza en realizar los movimientos varió entre las distintas pruebas, siendo la siguiente para cada uno de los agentes:
+
+\begin{itemize}
+    \item \textbf{Agente MCTS sin red neuronal}
+    \begin{itemize}
+    	\item \textbf{100 iteraciones:} duración media de 59 milisegundos.
+    	\item \textbf{80 iteraciones:} duración media de 30 milisegundos.
+	\item \textbf{50 iteraciones:} duración media de 28 milisegundos.
+    \end{itemize}
+    \item \textbf{Agente MCTS con red neuronal}
+    \begin{itemize}
+    	\item \textbf{100 iteraciones:} duración media de 5,1 segundos.
+    	\item \textbf{80 iteraciones:} duración media de 3,1 segundos.
+	\item \textbf{50 iteraciones:} duración media de 1,42 segundos.
+    \end{itemize}
+\end{itemize}
+
+(Estas mediciones se realizaron de manera manual y no se midieron todos los movimientos realizados de todas las partidas, sólo algunos de la mayoría de partidas que servirían como muestras representativas).
+
+Por otro lado, fue posible detectar cuándo uno de los agentes no elegía el mejor movimiento a ojos de un humano (es decir, el movimiento que capturaría más fichas o un movimiento que no pondría en riesgo muchas de las fichas propias). Aunque esto no es algo realmente concluyente en este apartado de pruebas "IA contra IA", puesto que el mejor movimiento a los ojos de un humano no tiene por qué ser el mejor movimiento posible. Por ello, vimos necesario realizar las pruebas "IA contra humano" con el fin de averiguar si esos movimientos podían ser malas jugadas por parte de los agentes (malas jugadas de las que un humano sí se puede percatar) o buenas jugadas que fueron determinantes para la victoria del agente en cuestión y, por ende, el agente tenía un mayor dominio del juego de Otelo que una persona no experimentada en él (aunque tampoco desconocedora).
+
+\subsection{Pruebas IA contra humano}
+Para evaluar la efectividad del agente MCTS (con red neuronal) a la hora de enfrentarse a un humano se jugaron cinco partidas contra dicho agente. Cabe recalcar que el usuario que realizó las pruebas no fue en absoluto una persona experimentada en el juego de Otelo; aunque esta persona sí conocía las reglas de Otelo, sí había jugado anteriormente y múltiples veces contra sistemas ajenos a este trabajo y, supuestamente, más refinados y sí trataba de colocar fichas de la manera adecuada, sin realizar acciones al azar. En estas pruebas, el jugador humano usó las fichas negras y el agente las fichas blancas.
+
+El resultado de las partidas fue de tres victorias para el humano y dos victorias para el agente. El balance de fichas (desde el punto de vista del humano) fue de -2, +26, -20, +16 y +34, es decir, una derrota ajustada, una derrota amplia y tres victorias también amplias.
 
 \section{Conclusiones}
-Resume lo aprendido, dificultades enfrentadas, mejoras posibles.
+El algoritmo de Monte Carlo Tree Search es un algoritmo bastante eficiente para el desarrollo de agentes capaces de jugar a juegos de estrategia deterministas y conocidos como lo es el Otelo. Elige los movimientos a realizar en base a pruebas empíricas, pues las partidas simuladas que juega antes de tomar una decisión son partidas perfectamente realistas que sí pueden hacer ver que un movimiento es probable que lleve a una victoria o una derrota. Aunque no sólo eso, sino que hemos podido comprobar que es posible mejorarlo implementando una red neuronal para que el agente no se limite a realizar acciones aleatorias en las simulaciones y hemos sido capaces de ver su efectividad contra un agente que no hace uso de la mencionada red neuronal. A su vez, modificando las distintas iteraciones a realizar por ambos agentes, hemos comprobado que el agente de la red neuronal consigue un balance general de victorias positivo en todos los casos, siendo el más aplastante el de las cien iteraciones (mayor número de victorias y mejor balance general con catorce fichas, es decir, un promedio de victorias para nada ajustadas) y el menos eficiente el de sólo cincuenta iteraciones contra un agente que realiza cien, con algunos empates y un promedio de victorias ajustadas (sólo 5,6 fichas), aunque la balanza siguió inclinándose hacia el agente que hace uso de la red neuronal. 
+
+Sin embargo, es necesario tener en cuenta que, por una parte, las partidas simuladas fueron escasas debido a la tardanza de las mismas. Sólo pudimos simular cuarenta y cinco partidas en total y somos conscientes de que es muy posible realizar las mismas pruebas y obtener resultados distintos. A pesar de ello, sí creemos que esas cuarenta y cinco partidas simuladas han sido suficientes para demostrar la mejora en la eficiencia que supone el uso de la red neuronal creada para las simulaciones que hace el algoritmo MCTS.
+
+Por otra parte, no podemos obviar la tardanza del agente que hace uso de la red neuronal. El tiempo que implica usarla no es para nada despreciable, con una diferencia de uno, tres y hasta casi cinco segundos en el tiempo empleado en realizar una acción. Esto ha sido el principal motivo de la poca cantidad de partidas de prueba jugadas y creemos que es lo que hace que, a la vista de los resultados, se ponga en duda el uso de la red neuronal que hemos diseñado.
+
+Aunque, por lo menos, podemos decir que el agente es capaz de jugar una partida contra un humano de manera eficiente, siendo capaz de ganar dos de cinco partidas jugadas.
+
+En definitiva, aunque el uso de la red neuronal añade un coste computacional considerable, su integración en el agente MCTS ha demostrado ser una mejora efectiva en términos de rendimiento estratégico, sentando así una base sólida para futuras optimizaciones orientadas tanto a la velocidad como a la inteligencia del juego, especialmente a lo primero, pues es lo que más margen de mejora posee.
 
 % ---------- Bibliografía ----------
-\bibliographystyle{IEEEtran}
-\bibliography{bibliografia}
+\begin{thebibliography}{99}
+
+\bibitem{russell2020}
+S.~Russell and P.~Norvig, \emph{Artificial Intelligence: A Modern Approach}, 4th~ed. Pearson, 2020, ch.~5, ``Adversarial Search.''
+
+\bibitem{browne2012}
+C.~B.~Browne, E.~Powley, D.~Whitehouse, S.~M.~Lucas, P.~I.~Cowling, P.~Rohlfshagen, S.~Tavener, D.~Perez, S.~Samothrakis, and S.~Colton, ``A survey of Monte Carlo tree search methods,'' \emph{IEEE Transactions on Computational Intelligence and AI in Games}, vol.~4, no.~1, pp.~1--43, 2012. [Online]. Available: \url{https://ieeexplore.ieee.org/document/6145622}
+
+\end{thebibliography}
+
 
 % ---------- Fin del documento ----------
 \end{document}

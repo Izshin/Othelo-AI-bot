@@ -1,3 +1,8 @@
-# otelo
+# Búsqueda adversaria: aprendiendo a jugar a Otelo
+Por Iván Fernández Limárquez y Eloy Sancho Cebrero
 
-para jugar ejecutar en el cmd (situándose en la carpeta en la que está que el archivo "otelo.py") el comando: python otelo.py
+Para jugar contra el agente es necesario ejecutar el script otelo.py, además de contar los paquetes utilizados en dicho script.
+
+Para observar una partida entre dos agentes se debe ejecutar el script otelo_ia_vs_ia.py.
+
+La documentación de este proyecto se encuentra en docs/documentacion.pdf
