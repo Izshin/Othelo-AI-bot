@@ -55,11 +55,11 @@ a menor el valor, peor la posicion, a mayor el valor, lo contrario, mejor la pos
 x = Conv2D(64, (3, 3), padding='same', activation="relu", name='conv1')(capa_entrada)
 
 
-x = Conv2D(128, (3, 3), padding='same', activation="relu", name='conv2')(x)
+x = Conv2D(128, (3, 3), padding='same', 
+           activation="relu", name='conv2')(x)
 
-
-x = Conv2D(128, (3, 3), padding='same', activation="relu", name='conv3')(x)
-
+x = Conv2D(128, (3, 3), padding='same',
+            activation="relu", name='conv3')(x)
 
 x = Flatten(name='flatten')(x)
 

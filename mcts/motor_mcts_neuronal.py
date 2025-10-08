@@ -54,6 +54,7 @@ def default_policy(nodo): #Como entrada tiene el nodo inicial, del que solo toma
 
     Como la red neuronal devuelve una matriz de 1x1, tenemos que acceder a ese valor con el índice v[0, 0], y tomarlo como float
     """
+    
     tensor = estado_a_tensor(nodo.estado)          
     v = modelo_valor.predict(tensor, verbose=0)    
     return float(v[0, 0]) #Y como salida tiene el valor de recompensa predicho por la red
